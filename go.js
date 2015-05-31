@@ -61,17 +61,13 @@ $("#canvas").click(function(event){
 
   console.log("x, y: " + xp + ", " + yp);
 
-  if (board[yp - 1][xp - 1] == 0){
+  if ( board[yp - 1][xp - 1] == 0 ){
     context.fillCircle(xp * offset, yp * offset, offset/2, 'red');
     board[yp - 1][xp - 1] = 1;
     console.log("maked the board");
   }
 
  })
-
-
-
-
 
 // HELPERS
 function makeBoard (size) {
@@ -85,4 +81,12 @@ function makeBoard (size) {
     board[i] = row;
   }
   return board;
+}
+
+// DEBUGGIN functions;
+
+function printBoard () {
+  for (var i = 0; i <= GAME_SIZE; i++ ){
+    console.log(board[i].toString());
+  }
 }
