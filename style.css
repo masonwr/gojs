@@ -1,4 +1,22 @@
 #canvas{
   /* padding: 100px; */
   background: #dddddd;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
 }
+
+#forground{
+  /* padding: 100px; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+#canvasWrapper {
+  position: relative;
+}
+
+
