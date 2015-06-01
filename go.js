@@ -5,9 +5,8 @@ var boards = {
   large:  19
 };
 
-var PLAYER_BLACK = 1;
-var PLAYER_WHITE = -1;
-var EMPTY = 0;
+var players = ['white', 'black'];
+var currentPlayer = 1;
 
 var SIZE = 950;
 var LINE_WIDTH = 2;
@@ -15,7 +14,7 @@ var GAME_SIZE = boards.large;
 var LINE_COLOR = '#333333'; 
 var offset = SIZE/GAME_SIZE;
 
-
+// appending some utility methods
 CanvasRenderingContext2D.prototype.fillCircle = function(x,y,r, color){
   this.beginPath();
   this.arc(x, y, r, 0, Math.PI*2, true);
@@ -67,9 +66,11 @@ $("#forground").click(function(event){
   var yp = Math.round(y/offset); 
 
   if (board.isEmpty(xp, yp)){
-    board.layStone(xp, yp, '#000000');
+    board.layStone(xp, yp, players[currentPlayer]);
+    
+    currentPlayer = (currentPlayer + 1) % 2; // switch player
   } else {
-    board.remove(xp, yp);
+    // board.remove(xp, yp);
   }
   
   context_forground.clearRect(0, 0, canvas.width, canvas.height); // cleans the forground first
@@ -80,7 +81,10 @@ $("#forground").click(function(event){
 function drawStones(board, context_forground, offset){
   for (var key in board.stones) {
     var stone = board.stones[key];
-    context_forground.fillCircle(stone.x * offset, stone.y * offset, offset/2, stone.color);
+    var x = stone.x * offset;
+    var y = stone.y * offset;
+    var r = (offset/2);
+    context_forground.fillCircle(x, y, r, stone.color);
   }
 }
 

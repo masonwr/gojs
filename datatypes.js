@@ -14,8 +14,6 @@ Board.prototype.layStone = function (x, y, color) {
   var stone = new Stone(x, y, color);
   var key = this.hashCoords(x, y);
   this.stones[key] = stone;
-
-  console.log(key);
 }
 
 Board.prototype.hashCoords = function (x, y){
@@ -33,6 +31,15 @@ Board.prototype.isEmpty = function (x, y){
 Board.prototype.remove = function(x, y) {
   delete this.stones[this.hashCoords(x, y)]; 
 }
+
+Board.prototype.unHash = function(hash) {
+  var splits = hash.split("-");
+  return {
+    x: parseInt(splits[0]),
+    y: parseInt(splits[1])
+  };
+}
+
 
 
 Board.prototype.getNeighbors = function(x, y) {
