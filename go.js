@@ -2,14 +2,14 @@
 var boards = {
   small:  9,
   medium: 13,
-  large:  18
+  large:  19
 };
 
 var PLAYER_BLACK = 1;
 var PLAYER_WHITE = -1;
 var EMPTY = 0;
 
-var SIZE = 750;
+var SIZE = 950;
 var LINE_WIDTH = 2;
 var GAME_SIZE = boards.large;
 var LINE_COLOR = '#333333'; 
@@ -30,15 +30,18 @@ context = canvas.getContext("2d");
 forground = document.getElementById("forground");
 context_forground = forground.getContext("2d");
 
-var board = new Board; 
+var board = new Board(GAME_SIZE); 
 
 // sets the color for the board
 context.fillStyle = LINE_COLOR;
 
 // draw board grid
-for (var i = 0; i < GAME_SIZE + 1; i++) {
-  context.fillRect(0 + (i * offset) + offset, 0 + offset, LINE_WIDTH, SIZE);
-  context.fillRect(0 + offset, 0 + (i * offset) + offset, SIZE, LINE_WIDTH);
+for (var i = 0; i < GAME_SIZE; i++) {
+  var line_len = SIZE - offset;
+  var x = (i * offset) + offset;
+  
+  context.fillRect( x, offset, LINE_WIDTH, line_len);
+  context.fillRect( offset, x, line_len, LINE_WIDTH);
 };
 
 // draw star points
@@ -68,6 +71,7 @@ $("#forground").click(function(event){
   } else {
     board.remove(xp, yp);
   }
+  
   context_forground.clearRect(0, 0, canvas.width, canvas.height); // cleans the forground first
   drawStones(board, context_forground, offset);
 });

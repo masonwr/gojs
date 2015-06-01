@@ -5,7 +5,8 @@ var Stone = function(x, y, color){
   this.color = color;
 }
 
-var Board = function(){
+var Board = function(size){
+  this.size = size;
   this.stones = {};
 }
 
@@ -34,6 +35,9 @@ Board.prototype.remove = function(x, y) {
 }
 
 
+Board.prototype.getNeighbors = function(x, y) {
+
+}
 // testin 
 
 // var b = new Board;
