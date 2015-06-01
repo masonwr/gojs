@@ -13,6 +13,8 @@ Board.prototype.layStone = function (x, y, color) {
   var stone = new Stone(x, y, color);
   var key = this.hashCoords(x, y);
   this.stones[key] = stone;
+
+  console.log(key);
 }
 
 Board.prototype.hashCoords = function (x, y){
