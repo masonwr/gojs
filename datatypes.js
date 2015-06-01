@@ -5,6 +5,12 @@ var Stone = function(x, y, color){
   this.color = color;
 }
 
+Stone.prototype.getNeighbors = function(board) {
+  // todo implemtn this
+  // thing about where this should be?
+  // how are the ground going to be represented
+}
+
 var Board = function(size){
   this.size = size;
   this.stones = {};
@@ -41,10 +47,6 @@ Board.prototype.unHash = function(hash) {
 }
 
 
-
-Board.prototype.getNeighbors = function(x, y) {
-
-}
 // testin 
 
 // var b = new Board;
