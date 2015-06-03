@@ -5,6 +5,11 @@ var Stone = function(x, y, color){
   this.color = color;
 }
 
+// function must return only the appropriate number of neighbore
+// so an array of len >= 2 and <= 4,
+// filled with eigher undefied of stones
+//
+// or it could retun null if there are only undefied heighbors...
 Stone.prototype.getNeighbors = function(board) {
   // todo implemtn this
   // thing about where this should be?
@@ -47,12 +52,32 @@ Board.prototype.unHash = function(hash) {
 }
 
 
-// testin 
-
-// var b = new Board;
-
-// b.layStone(0,0, 'black');
-
-// console.log(b.getStone(0,1));
-
-// console.log("ih");
+/*
+ * sudo 
+ *
+ * newStone;
+ * laystone
+ * remove dead stones:
+ *
+ * fn isStoneAlive(Stone):
+ *
+ *  tooLookat = []
+ *  visited =[] 
+ *
+ *  tooLookat.push(ston);
+ *
+ *  while (tooLookate.length > 0):
+ *    var curS = tooLookat.pop();
+ *
+ *    if (curS.hasEye()) return;
+ *
+ *    for nstone in curS.getConnections(): // samecolor stone
+ *      if nstone in visited:
+ *        continue
+ *      else:
+ *        tooLookat.push(stone);
+ *
+ *  
+ *
+ *
+ */

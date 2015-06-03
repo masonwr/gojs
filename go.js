@@ -5,7 +5,7 @@ var boards = {
   large:  19
 };
 
-var players = ['white', 'black'];
+var players = ['white', 'black']
 var currentPlayer = 1;
 
 var SIZE = 950;
@@ -68,9 +68,9 @@ $("#forground").click(function(event){
   if (board.isEmpty(xp, yp)){
     board.layStone(xp, yp, players[currentPlayer]);
     
-    currentPlayer = (currentPlayer + 1) % 2; // switch player
+    currentPlayer = (currentPlayer + 1) % players.length // switch player
   } else {
-    // board.remove(xp, yp);
+    board.remove(xp, yp);
   }
   
   context_forground.clearRect(0, 0, canvas.width, canvas.height); // cleans the forground first
