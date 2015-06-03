@@ -7,16 +7,18 @@ var Stone = function(x, y, color){
 
 // returns all stone with one degree of connection to 
 // the target stone (this).
+//
+// this funcion should be moved to the board proabably
 Stone.prototype.getConnectedStones = function(board) {
   var stones = [];
-  var this_color = this.color; 
   
   // helper function to manage adding stones
   var stoneAdder = function(stone){
-    if (stone && this_color == stone.color){
+    // this is kinda unfortunate logic.
+    // undified is the 'value' represents an empty 
+    // site in the graph/board.
+    if (stone || typeof stone == 'undefined'){
       stones.push(stone);
-    } else {
-      console.log("no stone");
     }
   };
 
@@ -46,7 +48,13 @@ Board.prototype.hashCoords = function (x, y){
   return x.toString() + "-" + y.toString();
 }
 
+// returns the stone at the specifiec coords,
+// on fail returne false
 Board.prototype.getStone = function (x, y){
+  var isValid = x > 0 && x <= this.size
+      &&        y > 0 && y <= this.size;
+
+  if (! isValid) return false;
   return this.stones[this.hashCoords(x, y)];
 }
 
@@ -64,6 +72,18 @@ Board.prototype.unHash = function(hash) {
     x: parseInt(splits[0]),
     y: parseInt(splits[1])
   };
+}
+
+
+function isStoneAlive(stone, board){
+  var visites = [];
+  var yetToVisit = [];
+
+  yetToVisit.push(stone);
+
+  while (yetToVisit.length > 0){
+    
+  }
 }
 
 
