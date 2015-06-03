@@ -5,17 +5,28 @@ var Stone = function(x, y, color){
   this.color = color;
 }
 
-// function must return only the appropriate number of neighbore
-// so an array of len >= 2 and <= 4,
-// filled with eigher undefied of stones
-//
-// or it could retun null if there are only undefied heighbors...
-Stone.prototype.getNeighbors = function(board) {
-  // todo implemtn this
-  // thing about where this should be?
-  // how are the ground going to be represented
-}
+// returns all stone with one degree of connection to 
+// the target stone (this).
+Stone.prototype.getConnectedStones = function(board) {
+  var stones = [];
+  var this_color = this.color; 
+  
+  // helper function to manage adding stones
+  var stoneAdder = function(stone){
+    if (stone && this_color == stone.color){
+      stones.push(stone);
+    } else {
+      console.log("no stone");
+    }
+  };
 
+  stoneAdder(board.getStone(this.x, this.y + 1));
+  stoneAdder(board.getStone(this.x, this.y - 1));
+  stoneAdder(board.getStone(this.x + 1, this.y));
+  stoneAdder(board.getStone(this.x - 1, this.y));
+
+  return stones;
+}
 var Board = function(size){
   this.size = size;
   this.stones = {};
@@ -25,6 +36,10 @@ Board.prototype.layStone = function (x, y, color) {
   var stone = new Stone(x, y, color);
   var key = this.hashCoords(x, y);
   this.stones[key] = stone;
+
+  // for debugging
+  var connections = stone.getConnectedStones(this);
+  console.log("connected stones: ", connections);
 }
 
 Board.prototype.hashCoords = function (x, y){
