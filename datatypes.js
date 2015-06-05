@@ -9,7 +9,7 @@ var Stone = function(x, y, color){
 // the target stone (this).
 //
 // this funcion should be moved to the board proabably
-Stone.prototype.getConnectedStones = function(board) {
+Stone.prototype.getAdjNodes = function(board) {
   var stones = [];
   
   // helper function to manage adding stones
@@ -29,6 +29,20 @@ Stone.prototype.getConnectedStones = function(board) {
 
   return stones;
 }
+
+// returs an array for adjacent stone of the same
+// color.
+// board -> [Stones]
+Stone.prototype.getConnectedStones = function(board){
+  var color = this.color; 
+
+  var pred = function (adj) {
+    return adj && (adj.color == color);
+  }
+  return _.filter(this.getAdjNodes(board), pred);
+}
+
+
 var Board = function(size){
   this.size = size;
   this.stones = {};
@@ -40,8 +54,10 @@ Board.prototype.layStone = function (x, y, color) {
   this.stones[key] = stone;
 
   // for debugging
-  var connections = stone.getConnectedStones(this);
-  console.log("connected stones: ", connections);
+  var connections = stone.getAdjNodes(this);
+  console.log("adjacent stones: ", connections);
+
+  console.log("connected adj stone: ", stone.getConnectedStones(this));
 }
 
 Board.prototype.hashCoords = function (x, y){
@@ -82,7 +98,7 @@ function isStoneAlive(stone, board){
   yetToVisit.push(stone);
 
   while (yetToVisit.length > 0){
-    
+      
   }
 }
 
