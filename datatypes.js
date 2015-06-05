@@ -55,6 +55,10 @@ Board.prototype.layStone = function (x, y, color) {
   var key = this.hashCoords(x, y);
   this.stones[key] = stone;
 
+
+  this.removeTheDead();
+  this.stones[key] = stone;
+  this.removeTheDead();
   // for debugging
   var connections = stone.getAdjNodes(this);
   console.log("adjacent stones: ", connections);
@@ -63,6 +67,13 @@ Board.prototype.layStone = function (x, y, color) {
   console.log("is alive: " , isStoneAlive(stone, this));
 }
 
+Board.prototype.removeTheDead = function(){
+  var stones = this.stones;
+  var board = this;
+  _.each(_.toArray(stones), function (st) {
+    isStoneAlive(st, board);
+  });
+}
 
 Board.prototype.hashCoords = function (x, y){
   return x.toString() + "-" + y.toString();
@@ -110,14 +121,14 @@ function isStoneAlive(stone, board){
     var connected = currentStone.getConnectedStones(board);
     
     _.each(connected, function(nst){
-      if (visited.indexOf(nst) == -1) que.push(nst);
+      if (visited.indexOf(nst) === -1) que.push(nst);
     });
   }
 
-  // removes dead stones...
-  // _.each(visited, function(st){
-    // board.remove(st.x, st.y);
-  // });
+//  removes dead stones...
+  _.each(visited, function(st){
+    board.remove(st.x, st.y);
+  });
 
   return false;
 }
