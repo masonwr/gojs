@@ -12,10 +12,8 @@ var Stone = function(x, y, color){
 Stone.prototype.getAdjNodes = function(board) {
   var stones = [];
   
-  // helper function to manage adding stones
   var stoneAdder = function(stone){
-    // this is kinda unfortunate logic.
-    // undified is the 'value' represents an empty 
+    // undified is the 'value' that represents an empty 
     // site in the graph/board.
     if (stone || typeof stone == 'undefined'){
       stones.push(stone);
@@ -42,6 +40,10 @@ Stone.prototype.getConnectedStones = function(board){
   return _.filter(this.getAdjNodes(board), pred);
 }
 
+Stone.prototype.hasEye = function(board){
+  return _.any(this.getAdjNodes(board), function(adj){ return typeof adj == 'undefined'}); 
+}
+
 
 var Board = function(size){
   this.size = size;
@@ -56,8 +58,10 @@ Board.prototype.layStone = function (x, y, color) {
   // for debugging
   var connections = stone.getAdjNodes(this);
   console.log("adjacent stones: ", connections);
-
+  console.log("stone has eyes: " , stone.hasEye(this));
   console.log("connected adj stone: ", stone.getConnectedStones(this));
+
+  console.log("is alive: " , isStoneAlive(stone, this));
 }
 
 Board.prototype.hashCoords = function (x, y){
@@ -92,14 +96,41 @@ Board.prototype.unHash = function(hash) {
 
 
 function isStoneAlive(stone, board){
-  var visites = [];
-  var yetToVisit = [];
+  var visited = [];
+  var que = [];
 
-  yetToVisit.push(stone);
+  que.push(stone);
 
-  while (yetToVisit.length > 0){
+  while (que.length > 0){
+    
+    var currentStone = que.pop();
+    
+    console.log("length of que: " , que.length);
+
+    if (currentStone.hasEye(board)) return true;
+
+    visited.push(currentStone);
+
+
+    var connected = currentStone.getConnectedStones(board);
+
+    for (var i = 0; i < connected.length; i++) {
+      var st = connected[i];
       
+      var hasVisited = _.find(visited, function(vst){
+        return vst.x == st.x && vst.y == st.y;
+      });
+
+      if (hasVisited) {
+        console.log(connected[i], " is in ", visited);
+        } else {
+        que.push(connected[i]);
+        console.log("adding to que: ", que);
+      }
+    };
   }
+
+  return false;
 }
 
 
