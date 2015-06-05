@@ -60,9 +60,9 @@ Board.prototype.layStone = function (x, y, color) {
   console.log("adjacent stones: ", connections);
   console.log("stone has eyes: " , stone.hasEye(this));
   console.log("connected adj stone: ", stone.getConnectedStones(this));
-
   console.log("is alive: " , isStoneAlive(stone, this));
 }
+
 
 Board.prototype.hashCoords = function (x, y){
   return x.toString() + "-" + y.toString();
@@ -102,33 +102,22 @@ function isStoneAlive(stone, board){
   que.push(stone);
 
   while (que.length > 0){
-    
     var currentStone = que.pop();
-    
-    console.log("length of que: " , que.length);
-
     if (currentStone.hasEye(board)) return true;
 
     visited.push(currentStone);
 
-
     var connected = currentStone.getConnectedStones(board);
-
-    for (var i = 0; i < connected.length; i++) {
-      var st = connected[i];
-      
-      var hasVisited = _.find(visited, function(vst){
-        return vst.x == st.x && vst.y == st.y;
-      });
-
-      if (hasVisited) {
-        console.log(connected[i], " is in ", visited);
-        } else {
-        que.push(connected[i]);
-        console.log("adding to que: ", que);
-      }
-    };
+    
+    _.each(connected, function(nst){
+      if (visited.indexOf(nst) == -1) que.push(nst);
+    });
   }
+
+  // removes dead stones...
+  // _.each(visited, function(st){
+    // board.remove(st.x, st.y);
+  // });
 
   return false;
 }
