@@ -7,7 +7,7 @@ var BOARDS = {
     large: 19
 };
 
-var players = ['white', 'black']
+var players = ['white', 'black'];
 var currentPlayer = 1;
 
 var SIZE = 950;
@@ -44,7 +44,6 @@ for (var i = 0; i < GAME_SIZE; i++) {
     context.fillRect(x, offset, LINE_WIDTH, line_len);
     context.fillRect(offset, x, line_len, LINE_WIDTH);
 }
-;
 
 // draw star points
 for (var i = 0; i < 9; i++) {
@@ -75,15 +74,15 @@ $("#forground").click(function (event) {
         currentPlayer = 1;
     }
 
-    var x = event.offsetX;
-    var y = event.offsetY;
+    var x = event.pageX;
+    var y = event.pageY;
 
     var xp = Math.round(x / offset);
     var yp = Math.round(y / offset);
 
     if (board.isEmpty(xp, yp)) {
         if (board.layStone(xp, yp, players[currentPlayer])) {
-            currentPlayer = (currentPlayer + 1) % players.length // switch player
+            currentPlayer = (currentPlayer + 1) % players.length; // switch player
         }
     } else {
         board.remove(xp, yp);
