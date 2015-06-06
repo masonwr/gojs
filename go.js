@@ -59,6 +59,16 @@ for (var i = 0; i < 9; i++){
 
 
 $("#forground").click(function(event){
+ 
+  // constrolls for development only
+  if (window.event.shiftKey){
+    currentPlayer = 0;
+  }
+
+  if (window.event.altKey){
+    currentPlayer = 1; 
+  }
+
   var x = event.offsetX;
   var y = event.offsetY;
 

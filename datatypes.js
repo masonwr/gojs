@@ -1,5 +1,7 @@
 "use strict";
 
+var DEBUG = false;
+
 var Stone = function (x, y, color) {
   this.x = x;
   this.y = y;
@@ -35,9 +37,19 @@ Stone.prototype.getAdjNodes = function (board) {
 Stone.prototype.getConnectedStones = function(board){
   var color = this.color; 
 
-  var pred = function (adj) {
-    return adj && (adj.color == color);
-  };
+  var pred = function (adj) 
+    { return adj && (adj.color == color); };
+
+  return _.filter(this.getAdjNodes(board), pred);
+};
+
+// returs an array for adjacent stone of the opposite
+// color.
+// board -> [Stones]
+Stone.prototype.getAdjStoneOfOppColor = function(board){
+  var color = this.color; 
+  var pred = function (adj) 
+    { return adj && (adj.color != color); };
   return _.filter(this.getAdjNodes(board), pred);
 };
 
@@ -53,28 +65,39 @@ var Board = function(size){
 };
 
 Board.prototype.layStone = function (x, y, color) {
+  var board = this;
   var stone = new Stone(x, y, color);
   var key = this.hashCoords(x, y);
   this.stones[key] = stone;
 
+  var connectedOppositeStones = stone.getAdjStoneOfOppColor(this);
+  
+  _.each(connectedOppositeStones, function(st){
+    isStoneAlive(st, board, removeStones);
+  });
+
+  var suiciede = isStoneAlive(stone, this);
+  console.log("suicide", ! suiciede);
 
   this.removeTheDead();
   this.stones[key] = stone;
   this.removeTheDead();
   
   // for debugging
-  var connections = stone.getAdjNodes(this);
-  console.log("adjacent stones: ", connections);
-  console.log("stone has eyes: " , stone.hasEye(this));
-  console.log("connected adj stone: ", stone.getConnectedStones(this));
-  console.log("is alive: " , isStoneAlive(stone, this));
+  if (DEBUG){
+    var connections = stone.getAdjNodes(this);
+    console.log("adjacent stones: ", connections);
+    console.log("stone has eyes: " , stone.hasEye(this));
+    console.log("connected adj stone: ", stone.getConnectedStones(this));
+    console.log("is alive: " , isStoneAlive(stone, this));
+  }
 };
 
 Board.prototype.removeTheDead = function(){
   var stones = this.stones;
   var board = this;
   _.each(_.toArray(stones), function (st) {
-    isStoneAlive(st, board);
+    isStoneAlive(st, board, removeStones);
   });
 };
 
@@ -111,7 +134,12 @@ Board.prototype.unHash = function(hash) {
 };
 
 
-function isStoneAlive(stone, board){
+function removeStones (stones, board) {
+  _.each(stones, 
+    function(st){ board.remove(st.x, st.y); });
+};
+
+function isStoneAlive(stone, board, callback){
   var visited = [];
   var que = [];
 
@@ -130,10 +158,13 @@ function isStoneAlive(stone, board){
     });
   }
 
-  //  removes dead stones...
-  _.each(visited, function(st){
-    board.remove(st.x, st.y);
-  });
+  if (callback) {
+    callback(visited, board);
+  }
+  // //  removes dead stones...
+  // _.each(visited, function(st){
+  //   board.remove(st.x, st.y);
+  // });
 
   return false;
 }
