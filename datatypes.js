@@ -2,6 +2,8 @@
 
 var DEBUG = false;
 
+var boardStates = [];
+
 var Stone = function (x, y, color) {
   this.x = x;
   this.y = y;
@@ -65,19 +67,40 @@ var Board = function(size){
 };
 
 Board.prototype.layStone = function (x, y, color) {
+  
   var board = this;
+
+
   var stone = new Stone(x, y, color);
   var key = this.hashCoords(x, y);
   this.stones[key] = stone;
 
+  boardStates.push(_.cloneDeep(board.stones));
+  if (boardStates.length > 3) boardStates.shift();
+
+  // this is still not quite perfect. trying to figure it out still...
+  // right now im trying to evaluate ko situations by comparing board states
+  if ( areBoardStatesEqual(boardStates[0], this.stones) && boardStates.length >= 2){
+    console.log("ko");
+  }
+
   var connectedOppositeStones = stone.getAdjStoneOfOppColor(this);
   
+  // this seems to fix 'snap back' situations.
+  // ~ you are measuing the effect of the stone
+  // before looking at the stone directly
   _.each(connectedOppositeStones, function(st){
     isStoneAlive(st, board, removeStones);
   });
 
-  var suiciede = isStoneAlive(stone, this);
-  console.log("suicide", ! suiciede);
+  var isSuicide = ! isStoneAlive(stone, this);
+  
+  // console.log('is suicide: ', isSuicide);
+
+  if (isSuicide) {
+    board.remove(x,y);
+    return;
+  }
 
   this.removeTheDead();
   this.stones[key] = stone;
@@ -169,6 +192,27 @@ function isStoneAlive(stone, board, callback){
   return false;
 }
 
+function areBoardStatesEqual (st1, st2) {
+  st1 =  _.toArray(st1);
+  st2 =  _.toArray(st2);
+
+  var zipped = _.zip(st1, st2);
+  
+  var same = _.every(zipped, function(cell){
+    if (! cell[0])  return false
+    var fst = cell[0];
+    
+    if (! cell[1]) return false;
+    var snd = cell[1];
+
+    return fst.x == snd.x
+    &&     fst.y == snd.y
+    &&     fst.color == snd.color;
+    
+  });
+
+  return same;
+}
 
 /*
  * sudo 

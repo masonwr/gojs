@@ -1,4 +1,6 @@
-// 'use strict';
+'use strict';
+
+
 var boards = {
   small:  9,
   medium: 13,
@@ -23,11 +25,11 @@ CanvasRenderingContext2D.prototype.fillCircle = function(x,y,r, color){
   this.fill();
 }
 
-canvas = document.getElementById("canvas");
-context = canvas.getContext("2d");
+var canvas = document.getElementById("canvas");
+var context = canvas.getContext("2d");
 
-forground = document.getElementById("forground");
-context_forground = forground.getContext("2d");
+var forground = document.getElementById("forground");
+var context_forground = forground.getContext("2d");
 
 var board = new Board(GAME_SIZE); 
 
@@ -77,7 +79,6 @@ $("#forground").click(function(event){
 
   if (board.isEmpty(xp, yp)){
     board.layStone(xp, yp, players[currentPlayer]);
-    
     currentPlayer = (currentPlayer + 1) % players.length // switch player
   } else {
     board.remove(xp, yp);
@@ -99,27 +100,3 @@ function drawStones(board, context_forground, offset){
 }
 
 
-/* refactoring ideas
- *
- * build out the board objct a bit more.
- *
- * make the interface such that the registering the clicking is abstracted
- * away from the gui.
- *
- * so the interface would look like this:
- * ` board.layStone(x, y, currentPlayer);
- *
- * something like that.
- *
- * the game object need to then also be built out.
- *
- * also the board could have a reference to a collection of 
- * stones. and after the clicking had happened the stones could be redrawn.
- * this way we can possible make the idea of groups and such? may be.
- *
- * what do i need to work on first:
- *  1) general refactoring
- *  2) build out objects, makge game object, make board object. make interfaces.
- *  3) add player switching
- *  4) try to remove dead stones
- */
