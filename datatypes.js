@@ -1,15 +1,16 @@
+"use strict";
 
-var Stone = function(x, y, color){
+var Stone = function (x, y, color) {
   this.x = x;
   this.y = y;
   this.color = color;
-}
+};
 
 // returns all stone with one degree of connection to 
 // the target stone (this).
 //
 // this funcion should be moved to the board proabably
-Stone.prototype.getAdjNodes = function(board) {
+Stone.prototype.getAdjNodes = function (board) {
   var stones = [];
   
   var stoneAdder = function(stone){
@@ -26,7 +27,7 @@ Stone.prototype.getAdjNodes = function(board) {
   stoneAdder(board.getStone(this.x - 1, this.y));
 
   return stones;
-}
+};
 
 // returs an array for adjacent stone of the same
 // color.
@@ -36,19 +37,20 @@ Stone.prototype.getConnectedStones = function(board){
 
   var pred = function (adj) {
     return adj && (adj.color == color);
-  }
+  };
   return _.filter(this.getAdjNodes(board), pred);
-}
+};
 
 Stone.prototype.hasEye = function(board){
-  return _.any(this.getAdjNodes(board), function(adj){ return typeof adj == 'undefined'}); 
-}
+  return _.any(this.getAdjNodes(board), 
+    function(adj){ return typeof adj == 'undefined'}); 
+};
 
 
 var Board = function(size){
   this.size = size;
   this.stones = {};
-}
+};
 
 Board.prototype.layStone = function (x, y, color) {
   var stone = new Stone(x, y, color);
@@ -59,13 +61,14 @@ Board.prototype.layStone = function (x, y, color) {
   this.removeTheDead();
   this.stones[key] = stone;
   this.removeTheDead();
+  
   // for debugging
   var connections = stone.getAdjNodes(this);
   console.log("adjacent stones: ", connections);
   console.log("stone has eyes: " , stone.hasEye(this));
   console.log("connected adj stone: ", stone.getConnectedStones(this));
   console.log("is alive: " , isStoneAlive(stone, this));
-}
+};
 
 Board.prototype.removeTheDead = function(){
   var stones = this.stones;
@@ -73,11 +76,11 @@ Board.prototype.removeTheDead = function(){
   _.each(_.toArray(stones), function (st) {
     isStoneAlive(st, board);
   });
-}
+};
 
 Board.prototype.hashCoords = function (x, y){
   return x.toString() + "-" + y.toString();
-}
+};
 
 // returns the stone at the specifiec coords,
 // on fail returne false
@@ -87,23 +90,25 @@ Board.prototype.getStone = function (x, y){
 
   if (! isValid) return false;
   return this.stones[this.hashCoords(x, y)];
-}
+};
 
 Board.prototype.isEmpty = function (x, y){
   return !(this.getStone(x,y));
-}
+};
 
 Board.prototype.remove = function(x, y) {
   delete this.stones[this.hashCoords(x, y)]; 
-}
+};
 
+
+// this is never called...
 Board.prototype.unHash = function(hash) {
   var splits = hash.split("-");
   return {
     x: parseInt(splits[0]),
     y: parseInt(splits[1])
   };
-}
+};
 
 
 function isStoneAlive(stone, board){
@@ -125,7 +130,7 @@ function isStoneAlive(stone, board){
     });
   }
 
-//  removes dead stones...
+  //  removes dead stones...
   _.each(visited, function(st){
     board.remove(st.x, st.y);
   });
