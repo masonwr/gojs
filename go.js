@@ -1,7 +1,7 @@
 'use strict';
 
 
-var boards = {
+var BOARDS = {
   small:  9,
   medium: 13,
   large:  19
@@ -12,7 +12,7 @@ var currentPlayer = 1;
 
 var SIZE = 950;
 var LINE_WIDTH = 2;
-var GAME_SIZE = boards.large;
+var GAME_SIZE = BOARDS.medium;
 var LINE_COLOR = '#333333'; 
 var offset = SIZE/GAME_SIZE;
 
@@ -78,8 +78,9 @@ $("#forground").click(function(event){
   var yp = Math.round(y/offset); 
 
   if (board.isEmpty(xp, yp)){
-    board.layStone(xp, yp, players[currentPlayer]);
-    currentPlayer = (currentPlayer + 1) % players.length // switch player
+    if (board.layStone(xp, yp, players[currentPlayer])){
+      currentPlayer = (currentPlayer + 1) % players.length // switch player
+    }
   } else {
     board.remove(xp, yp);
   }

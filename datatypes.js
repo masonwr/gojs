@@ -66,6 +66,8 @@ var Board = function(size){
   this.stones = {};
 };
 
+// board.layStone returns true is move was successful, 
+// false otheer wise
 Board.prototype.layStone = function (x, y, color) {
   
   var board = this;
@@ -76,12 +78,14 @@ Board.prototype.layStone = function (x, y, color) {
   this.stones[key] = stone;
 
   boardStates.push(_.cloneDeep(board.stones));
-  if (boardStates.length > 3) boardStates.shift();
+  // if (boardStates.length > 3) boardStates.shift();
+  var numOfturns = boardStates.length;
 
-  // this is still not quite perfect. trying to figure it out still...
-  // right now im trying to evaluate ko situations by comparing board states
-  if ( areBoardStatesEqual(boardStates[0], this.stones) && boardStates.length >= 2){
-    console.log("ko");
+  if (numOfturns > 1 && areBoardStatesEqual(boardStates[numOfturns - 2], boardStates[numOfturns - 1])){
+    board.remove(x,y);
+    console.log("(!) KO!");
+    boardStates.pop();
+    return false;
   }
 
   var connectedOppositeStones = stone.getAdjStoneOfOppColor(this);
@@ -99,12 +103,16 @@ Board.prototype.layStone = function (x, y, color) {
 
   if (isSuicide) {
     board.remove(x,y);
-    return;
+    console.log("(!) CANNOT PLAY IN SUICIDE");
+    boardStates.pop();
+    return false;
   }
 
   this.removeTheDead();
   this.stones[key] = stone;
   this.removeTheDead();
+
+  return true;
   
   // for debugging
   if (DEBUG){
@@ -193,8 +201,12 @@ function isStoneAlive(stone, board, callback){
 }
 
 function areBoardStatesEqual (st1, st2) {
-  st1 =  _.toArray(st1);
-  st2 =  _.toArray(st2);
+  // todo IMPLEMENTS THIS IN A SORTED WAY!!
+  // this might be the problem. i would simplify this logic a bit hopefully.
+  st1 =  _.sortByAll(_.toArray(st1), _.values);
+  st2 =  _.sortByAll(_.toArray(st2), _.values);
+
+  // _.sortByAll(users, ['user', 'age']), _.values)
 
   var zipped = _.zip(st1, st2);
   
