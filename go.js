@@ -89,7 +89,8 @@ $("#forground").click(function (event) {
     var yp = Math.round(y / OFFSET);
     
     var isValid = xp > 0 && xp <= board.size 
-    &&   yp > 0 && yp <= board.size;
+             &&   yp > 0 && yp <= board.size;
+             
     if (! isValid) return;
 
     if (board.isEmpty(xp, yp)) {

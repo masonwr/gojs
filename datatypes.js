@@ -100,7 +100,6 @@ Board.prototype.layStone = function (x, y, color) {
 
   var isSuicide = ! isStoneAlive(stone, this);
   
-  // console.log('is suicide: ', isSuicide);
 
   if (isSuicide) {
     board.remove(x,y);
@@ -156,15 +155,6 @@ Board.prototype.remove = function(x, y) {
 };
 
 
-// this is never called...
-Board.prototype.unHash = function(hash) {
-  var splits = hash.split("-");
-  return {
-    x: parseInt(splits[0]),
-    y: parseInt(splits[1])
-  };
-};
-
 
 function removeStones (stones, board) {
   _.each(stones, 
@@ -193,21 +183,14 @@ function isStoneAlive(stone, board, callback){
   if (callback) {
     callback(visited, board);
   }
-  // //  removes dead stones...
-  // _.each(visited, function(st){
-  //   board.remove(st.x, st.y);
-  // });
-
+ 
   return false;
 }
 
 function areBoardStatesEqual (st1, st2) {
-  // todo IMPLEMENTS THIS IN A SORTED WAY!!
-  // this might be the problem. i would simplify this logic a bit hopefully.
   st1 =  _.sortByAll(_.toArray(st1), _.values);
   st2 =  _.sortByAll(_.toArray(st2), _.values);
 
-  // _.sortByAll(users, ['user', 'age']), _.values)
 
   var zipped = _.zip(st1, st2);
   
@@ -227,32 +210,4 @@ function areBoardStatesEqual (st1, st2) {
   return same;
 }
 
-/*
- * sudo 
- *
- * newStone;
- * laystone
- * remove dead stones:
- *
- * fn isStoneAlive(Stone):
- *
- *  tooLookat = []
- *  visited =[] 
- *
- *  tooLookat.push(ston);
- *
- *  while (tooLookate.length > 0):
- *    var curS = tooLookat.pop();
- *
- *    if (curS.hasEye()) return;
- *
- *    for nstone in curS.getConnections(): // samecolor stone
- *      if nstone in visited:
- *        continue
- *      else:
- *        tooLookat.push(stone);
- *
- *  
- *
- *
- */
+
