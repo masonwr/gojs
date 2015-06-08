@@ -25,8 +25,8 @@ CanvasRenderingContext2D.prototype.fillCircle = function (x, y, r, color) {
     this.fill();
 }
 
-var canvas = document.getElementById("canvas");
-var context = canvas.getContext("2d");
+var background = document.getElementById("background");
+var context = background.getContext("2d");
 
 var forground = document.getElementById("forground");
 var context_forground = forground.getContext("2d");
@@ -82,22 +82,25 @@ $("#forground").click(function (event) {
     var oldBoard = jQuery.extend(true, {}, board);
     boardStates.push(oldBoard);
 
-
     var x = event.pageX;
     var y = event.pageY;
 
     var xp = Math.round(x / OFFSET);
     var yp = Math.round(y / OFFSET);
+    
+    var isValid = xp > 0 && xp <= board.size 
+    &&   yp > 0 && yp <= board.size;
+    if (! isValid) return;
 
     if (board.isEmpty(xp, yp)) {
         if (board.layStone(xp, yp, players[currentPlayer])) {
             currentPlayer = (currentPlayer + 1) % players.length; // switch player
         }
     } else {
-        board.remove(xp, yp);
+        // board.remove(xp, yp);
     }
 
-    context_forground.clearRect(0, 0, canvas.width, canvas.height); // cleans the forground first
+    context_forground.clearRect(0, 0, background.width, background.height); // cleans the forground first
     drawStones(board, context_forground, OFFSET);
 });
 
@@ -109,7 +112,7 @@ document.onkeypress = function(e) {
            
             board = boardStates.pop();
 
-            context_forground.clearRect(0, 0, canvas.width, canvas.height); // cleans the forground first
+            context_forground.clearRect(0, 0, background.width, background.height); // cleans the forground first
             drawStones(board, context_forground, OFFSET);
         }
     }
