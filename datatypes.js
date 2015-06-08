@@ -2,7 +2,7 @@
 
 var DEBUG = false;
 
-var boardStates = [];
+var _boardStates = [];
 
 var Stone = function (x, y, color) {
   this.x = x;
@@ -77,14 +77,15 @@ Board.prototype.layStone = function (x, y, color) {
   var key = this.hashCoords(x, y);
   this.stones[key] = stone;
 
-  boardStates.push(_.cloneDeep(board.stones));
-  // if (boardStates.length > 3) boardStates.shift();
-  var numOfturns = boardStates.length;
+  _boardStates.push(_.cloneDeep(board.stones));
+  if (_boardStates.length > 3) _boardStates.shift();
+  
+  var numOfturns = _boardStates.length;
 
-  if (numOfturns > 1 && areBoardStatesEqual(boardStates[numOfturns - 2], boardStates[numOfturns - 1])){
+  if (numOfturns > 1 && areBoardStatesEqual(_boardStates[numOfturns - 2], _boardStates[numOfturns - 1])){
     board.remove(x,y);
     console.log("(!) KO!");
-    boardStates.pop();
+    _boardStates.pop();
     return false;
   }
 
@@ -104,7 +105,7 @@ Board.prototype.layStone = function (x, y, color) {
   if (isSuicide) {
     board.remove(x,y);
     console.log("(!) CANNOT PLAY IN SUICIDE");
-    boardStates.pop();
+    _boardStates.pop();
     return false;
   }
 

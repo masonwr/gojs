@@ -1,18 +1,18 @@
 'use strict';
-
-
 var BOARDS = {
     small: 9,
     medium: 13,
     large: 19
 };
 
+var boardStates = [];
+
 var players = ['white', 'black'];
 var currentPlayer = 1;
 
 var SIZE = 950;
 var LINE_WIDTH = 2;
-var GAME_SIZE = BOARDS.medium;
+var GAME_SIZE = BOARDS.large;
 var LINE_COLOR = '#333333';
 var OFFSET = SIZE / GAME_SIZE;
 
@@ -32,6 +32,11 @@ var forground = document.getElementById("forground");
 var context_forground = forground.getContext("2d");
 
 var board = new Board(GAME_SIZE);
+
+// record opening position
+var oldBoard = jQuery.extend(true, {}, board);
+boardStates.push(oldBoard);
+
 
 // sets the color for the board
 context.fillStyle = LINE_COLOR;
@@ -74,6 +79,10 @@ $("#forground").click(function (event) {
         currentPlayer = 1;
     }
 
+    var oldBoard = jQuery.extend(true, {}, board);
+    boardStates.push(oldBoard);
+
+
     var x = event.pageX;
     var y = event.pageY;
 
@@ -97,7 +106,9 @@ document.onkeypress = function(e) {
         e = e || window.event;
         var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
         if (charCode == 122) {
-            board.stones = _.cloneDeep(boardStates.pop());
+           
+            board = boardStates.pop();
+
             context_forground.clearRect(0, 0, canvas.width, canvas.height); // cleans the forground first
             drawStones(board, context_forground, OFFSET);
         }
