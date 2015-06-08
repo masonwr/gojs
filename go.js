@@ -1,4 +1,6 @@
 'use strict';
+
+
 var BOARDS = {
     small: 9,
     medium: 13,
@@ -71,6 +73,7 @@ $("#forground").click(function (event) {
     // constrolls for development only
     var we = window.event || event;
 
+    // debugger;
     if (we.shiftKey) {
         currentPlayer = 0;
     }
@@ -82,8 +85,10 @@ $("#forground").click(function (event) {
     var oldBoard = jQuery.extend(true, {}, board);
     boardStates.push(oldBoard);
 
-    var x = event.pageX;
-    var y = event.pageY;
+    // translates the click point into the board space
+    var xyoffset = $(this).offset();    
+    var x = event.pageX - xyoffset.left;
+    var y = event.pageY - xyoffset.top;
 
     var xp = Math.round(x / OFFSET);
     var yp = Math.round(y / OFFSET);
@@ -98,7 +103,7 @@ $("#forground").click(function (event) {
             currentPlayer = (currentPlayer + 1) % players.length; // switch player
         }
     } else {
-        // board.remove(xp, yp);
+        return;
     }
 
     context_forground.clearRect(0, 0, background.width, background.height); // cleans the forground first
