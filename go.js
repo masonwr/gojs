@@ -1,6 +1,5 @@
 'use strict';
 
-
 var BOARDS = {
     small: 9,
     medium: 13,
@@ -73,7 +72,6 @@ $("#forground").click(function (event) {
     // constrolls for development only
     var we = window.event || event;
 
-    // debugger;
     if (we.shiftKey) {
         currentPlayer = 0;
     }
@@ -82,6 +80,7 @@ $("#forground").click(function (event) {
         currentPlayer = 1;
     }
 
+    // record board state for undo roll backs
     var oldBoard = jQuery.extend(true, {}, board);
     boardStates.push(oldBoard);
 
@@ -110,6 +109,7 @@ $("#forground").click(function (event) {
     drawStones(board, context_forground, OFFSET);
 });
 
+// undo = z key
 document.onkeypress = function(e) {
     if (boardStates.length > 1) {
         e = e || window.event;
@@ -124,7 +124,6 @@ document.onkeypress = function(e) {
     }
 };
 
-// HELPERS
 function drawStones(board, context_forground, offset) {
     for (var key in board.stones) {
         var stone = board.stones[key];

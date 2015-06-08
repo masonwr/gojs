@@ -71,16 +71,16 @@ var Board = function(size){
 Board.prototype.layStone = function (x, y, color) {
     var board = this;
   
+    // 1) place stone on board
     var stone = new Stone(x, y, color);
     var key = this.hashCoords(x, y);
     this.stones[key] = stone;
 
+    // 2) record state to check for simple ko -> illegal move.
     _boardStates.push(_.cloneDeep(board.stones));
     if (_boardStates.length > 2) _boardStates.shift();
-
   
     var numOfturns = _boardStates.length;
-
     if (numOfturns > 1 && areBoardStatesEqual(_boardStates[numOfturns - 2], _boardStates[numOfturns - 1])){
         board.remove(x,y);
         console.log("(!) KO!");
@@ -88,18 +88,13 @@ Board.prototype.layStone = function (x, y, color) {
         return false;
     }
 
+    // 3) test for suicide -> illegal move.
     var connectedOppositeStones = stone.getAdjStoneOfOppColor(this);
-  
-    // this seems to fix 'snap back' situations.
-    // ~ you are measuing the effect of the stone
-    // before looking at the stone directly
     _.each(connectedOppositeStones, function(st){
         isStoneAlive(st, board, removeStones);
     });
 
     var isSuicide = ! isStoneAlive(stone, this);
-  
-
     if (isSuicide) {
         board.remove(x,y);
         console.log("(!) CANNOT PLAY IN SUICIDE");
@@ -107,20 +102,13 @@ Board.prototype.layStone = function (x, y, color) {
         return false;
     }
 
+    // apply move
+    // (the repetitive removeTheDead call is to correctly handle snap backs)
     this.removeTheDead();
     this.stones[key] = stone;
     this.removeTheDead();
 
     return true;
-  
-    // for debugging
-    if (DEBUG){
-        var connections = stone.getAdjNodes(this);
-        console.log("adjacent stones: ", connections);
-        console.log("stone has eyes: " , stone.hasEye(this));
-        console.log("connected adj stone: ", stone.getConnectedStones(this));
-        console.log("is alive: " , isStoneAlive(stone, this));
-    }
 };
 
 Board.prototype.removeTheDead = function(){
@@ -136,10 +124,11 @@ Board.prototype.hashCoords = function (x, y){
 };
 
 // returns the stone at the specifiec coords,
-// on fail returne false
+// if fails (meaning x and y are invalid) 
+// return false
 Board.prototype.getStone = function (x, y){
     var isValid = x > 0 && x <= this.size
-    &&        y > 0 && y <= this.size;
+    &&            y > 0 && y <= this.size;
 
     if (! isValid) return false;
     return this.stones[this.hashCoords(x, y)];
@@ -190,7 +179,6 @@ function areBoardStatesEqual (st1, st2) {
     st1 =  _.sortByAll(_.toArray(st1), _.values);
     st2 =  _.sortByAll(_.toArray(st2), _.values);
 
-
     var zipped = _.zip(st1, st2);
   
     var same = _.every(zipped, function(cell){
@@ -210,3 +198,11 @@ function areBoardStatesEqual (st1, st2) {
 }
 
 
+/*
+    TODO refactor how board state is saved for ko detection. just use a sorted object, that is 
+JSON strigified. also for simple ko rules we only need to store the last board state. (but for super ko, a list of 
+all board states).
+
+    1) make a strigify board method, that first sorts the board.stones, then strigifis it.
+    2) sava that has last_board_state, and them compair the current board to it. simple..
+*/
