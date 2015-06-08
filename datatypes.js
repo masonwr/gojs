@@ -77,6 +77,7 @@ Board.prototype.layStone = function (x, y, color) {
 
     _boardStates.push(_.cloneDeep(board.stones));
     if (_boardStates.length > 2) _boardStates.shift();
+
   
     var numOfturns = _boardStates.length;
 
