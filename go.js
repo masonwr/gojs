@@ -109,12 +109,12 @@ $("#forground").click(function (event) {
     drawStones(board, context_forground, OFFSET);
 });
 
-// undo = z key
 document.onkeypress = function(e) {
+    var z_key = 122;
     if (boardStates.length > 1) {
         e = e || window.event;
         var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
-        if (charCode == 122) {
+        if (charCode == z_key) {
            
             board = boardStates.pop();
 
