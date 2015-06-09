@@ -13,7 +13,7 @@ var currentPlayer = 1;
 
 var SIZE = 950;
 var LINE_WIDTH = 2;
-var GAME_SIZE = BOARDS.large;
+var GAME_SIZE = BOARDS.small;
 var LINE_COLOR = '#333333';
 var OFFSET = SIZE / GAME_SIZE;
 
