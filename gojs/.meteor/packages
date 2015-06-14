@@ -9,3 +9,7 @@ autopublish
 insecure
 less
 coffeescript
+accounts-ui
+accounts-password
+meteortypescript:typescript-libs
+dburles:collection-helpers

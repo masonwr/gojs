@@ -1,10 +1,3 @@
-if (Meteor.isClient) {
+// globals
 
-
-}
-
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
-}
+S_CURRENT_GAME = "currentGameID";

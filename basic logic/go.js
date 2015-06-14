@@ -85,6 +85,7 @@ $("#forground").click(function (event) {
     boardStates.push(oldBoard);
 
     // translates the click point into the board space
+    debugger;
     var xyoffset = $(this).offset();    
     var x = event.pageX - xyoffset.left;
     var y = event.pageY - xyoffset.top;
