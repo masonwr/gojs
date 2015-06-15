@@ -25,14 +25,6 @@ var context_forground;
 
 if (Meteor.isClient) {
 
-    Template.board.onCreated(function () {
-
-        Meteor.subscribe('currentGame', function () {
-            redrawGame(Games.findOne(), context_forground, forground.length);
-        });
-
-    });
-
     Template.board.onRendered(function () {
 
         CanvasRenderingContext2D.prototype.fillCircle = function (x, y, r, color) {
@@ -80,12 +72,27 @@ if (Meteor.isClient) {
     });
 
 
-    Template.board.helpers({});
+    Template.board.helpers({
+
+        getStones: function () {
+            var game = Games.findOne();
+            return game ? game.stones : [];
+        },
+
+        drawStone: function (stone) {
+            context_forground.fillCircle(
+                stone.x * OFFSET,
+                stone.y * OFFSET,
+                OFFSET / 2,
+                stone.player);
+        }
+
+    });
 
     Template.board.events({
 
         'click #forground': function (event) {
-            
+
             var xyoffset = $(event.target).offset();
             var x = event.pageX - xyoffset.left;
             var y = event.pageY - xyoffset.top;
@@ -111,7 +118,7 @@ if (Meteor.isClient) {
 
                 currentPlayer = (currentPlayer + 1) % players.length;
 
-                redrawGame(Games.findOne(), context_forground, forground.length);
+                //redrawGame(Games.findOne(), context_forground, forground.length);
             } else {
                 console.log("there is a ston alrady there");
             }
@@ -121,16 +128,16 @@ if (Meteor.isClient) {
 
 }
 
-function redrawGame(gameDoc, gcontext, length) {
-
-    gcontext.clearRect(0, 0, length, length);
-
-    for (var i in gameDoc.stones) {
-        var stone = gameDoc.stones[i];
-        gcontext.fillCircle(
-            stone.x * OFFSET,
-            stone.y * OFFSET,
-            OFFSET / 2,
-            stone.player);
-    }
-}
+//function redrawGame(gameDoc, gcontext, length) {
+//
+//    gcontext.clearRect(0, 0, length, length);
+//
+//    for (var i in gameDoc.stones) {
+//        var stone = gameDoc.stones[i];
+//        gcontext.fillCircle(
+//            stone.x * OFFSET,
+//            stone.y * OFFSET,
+//            OFFSET / 2,
+//            stone.player);
+//    }
+//}
