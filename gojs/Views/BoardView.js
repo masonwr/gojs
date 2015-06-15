@@ -118,9 +118,8 @@ if (Meteor.isClient) {
 
                 currentPlayer = (currentPlayer + 1) % players.length;
 
-                //redrawGame(Games.findOne(), context_forground, forground.length);
             } else {
-                console.log("there is a ston alrady there");
+                game.removeStone(xp, yp);
             }
         }
 
@@ -128,16 +127,3 @@ if (Meteor.isClient) {
 
 }
 
-//function redrawGame(gameDoc, gcontext, length) {
-//
-//    gcontext.clearRect(0, 0, length, length);
-//
-//    for (var i in gameDoc.stones) {
-//        var stone = gameDoc.stones[i];
-//        gcontext.fillCircle(
-//            stone.x * OFFSET,
-//            stone.y * OFFSET,
-//            OFFSET / 2,
-//            stone.player);
-//    }
-//}
