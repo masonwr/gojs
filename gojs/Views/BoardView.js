@@ -24,7 +24,7 @@ var context_forground;
 
 
 if (Meteor.isClient) {
-    
+
     Template.board.onRendered(function () {
 
         CanvasRenderingContext2D.prototype.fillCircle = function (x, y, r, color) {
