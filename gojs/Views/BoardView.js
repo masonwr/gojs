@@ -75,7 +75,7 @@ if (Meteor.isClient) {
     Template.board.helpers({
 
         getStones: function () {
-            var game = Games.findOne();
+            var game = Games.findOne(); // this needs to be updated
             return game ? game.stones : [];
         },
 
@@ -85,6 +85,10 @@ if (Meteor.isClient) {
                 stone.y * OFFSET,
                 OFFSET / 2,
                 stone.player);
+        },
+
+        lastUpdate: function () {
+            return Session.get('lastUpdate');
         }
 
     });
@@ -120,6 +124,7 @@ if (Meteor.isClient) {
 
             } else {
                 game.removeStone(xp, yp);
+                Session.set('lastUpdate', new Date() );
             }
         }
 

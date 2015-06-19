@@ -14,23 +14,48 @@ Games.helpers({
       player: player
     }
 
-    Games.update({_id: this._id}, {$push: {stones: stone}})
+    boardState = compressStones this.stones
+
+    dbop = {
+      $push:
+        stones: stone
+        gameHistory: boardState
+    }
+
+    Games.update({_id: this._id}, dbop)
 
   isEmpty: (x, y) ->
-     ! this.getStone(x, y)
+    ! this.getStone(x, y)
 
   removeStone: (x, y) ->
-      stones = this.stones
-      i = this.stones.indexOf( this.getStone(x, y) )
-      # todo: remove this stone form the list, and then update the DB with the new list
-      console.log("i", i)
+    dbop = {
+      $pull:
+        stones: this.getStone(x, y)
+    }
+    Games.update({_id: this._id}, dbop)
+
 
   getStone: (x, y) ->
     _.find this.stones, (s) ->  s.x == x and s.y == y
+
+  _setStones: (stones_prime) ->
+    dbop = {
+      $set:
+        stones: stones_prime
+    }
+    Games.update({_id: this._id}, dbop)
 
 
 });
 
 
-@Players = new Mongo.Collection("players");
+
+
+# [stone] -> str (serialized board state)
+
+compressStones = (stones) ->
+  strStones = _.map stones, (s) -> JSON.stringify s
+  strStones.sort()
+  JSON.stringify strStones
+
 
