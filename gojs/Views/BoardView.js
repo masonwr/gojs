@@ -120,7 +120,22 @@ if (Meteor.isClient) {
                 game.addStone(xp, yp, players[currentPlayer]);
                 currentPlayer = (currentPlayer + 1) % players.length;
 
-                console.log("neighbors: ", game.getNeighbors(xp, yp));
+                //console.log("neighbors: ", game.getNeighbors(xp, yp));
+                stones = game.stones;
+
+                console.log("stones presort", stones);
+
+                // move this sorting to the right place
+                stones.sort(function (s1, s2) {
+                    if (s1.x == s2.x){
+                        return s1.y - s2.y;
+                    } else {
+                        return s1.x - s2.x;
+                    }
+
+                });
+
+                console.log("stones postsort", stones);
             } else {
                 game.removeStone(xp, yp);
                 Session.set('lastUpdate', new Date() );
