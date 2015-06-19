@@ -12,6 +12,7 @@ if Meteor.isServer
       currentMove: 'black'
       stones:[]
       gameHistory:[]
+      size: 19 # this need to be programatically set in the future
 
     Games.insert defaultGame
 

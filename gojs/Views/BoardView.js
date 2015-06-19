@@ -76,8 +76,10 @@ if (Meteor.isClient) {
 
         getStones: function () {
             if (context_forground) {
-                context_forground.clearRect(0, 0, background.width, background.height)
-            };
+                context_forground.clearRect(0, 0, background.width, background.height);
+            } else {
+                console.log("context has not been set yet!");
+            }
             var game = Games.findOne(); // this needs to be updated
             return game ? game.stones : [];
         },
@@ -117,6 +119,8 @@ if (Meteor.isClient) {
             if (game.isEmpty(xp, yp)) {
                 game.addStone(xp, yp, players[currentPlayer]);
                 currentPlayer = (currentPlayer + 1) % players.length;
+
+                console.log("neighbors: ", game.getNeighbors(xp, yp));
             } else {
                 game.removeStone(xp, yp);
                 Session.set('lastUpdate', new Date() );
