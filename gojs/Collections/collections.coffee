@@ -36,9 +36,7 @@ Games.helpers
     _.filter neighbors, (node) -> node != null
 
 
-
-
-
+## HELPERS
 # [stone] -> str (serialized board state)
 compressStones = (stones) ->
   strStones = _.map stones, (s) -> JSON.stringify s
