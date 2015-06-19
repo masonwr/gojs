@@ -1,41 +1,28 @@
 @Games = new Mongo.Collection("games");
 
-# Game helpers
 
-Games.helpers({
+Games.helpers {
 
   getID: -> this._id
 
   addStone: (x, y, player) ->
-    stone = {
-      x: x
-      y: y
-      player: player
-    }
-
-    this.stones.push(stone);
+    this.stones.push(x:x, y:y, player:player);
     this._setStones(this.stones);
 
 
   isEmpty: (x, y) -> ! this.getStone(x, y)
 
   removeStone: (x, y) ->
-    dbop = {
-      $pull:
-        stones: this.getStone(x, y)
-    }
-    Games.update({_id: this._id}, dbop)
+    dbop = $pull: stones: this.getStone(x, y)
+    Games.update _id:this._id, dbop
 
 
   getStone: (x, y) ->
     _.find this.stones, (s) ->  s.x == x and s.y == y
 
   _setStones: (stones_prime) ->
-    dbop = {
-      $set:
-        stones: stones_prime
-    }
-    Games.update({_id: this._id}, dbop)
+    dbop = $set: stones: stones_prime
+    Games.update _id: this._id, dbop
 
 
 
@@ -53,7 +40,7 @@ Games.helpers({
     neighbors.push getStone(x, y-1)
 
     return _.filter neighbors, (node) -> node != null
-});
+}
 
 
 

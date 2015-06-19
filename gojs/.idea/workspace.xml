@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71f3695d-8840-4f3a-9179-972f5c4783b3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Views/BoardView.js" afterPath="$PROJECT_DIR$/Views/BoardView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_bootstap.coffee" afterPath="$PROJECT_DIR$/_bootstap.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Collections/collections.coffee" afterPath="$PROJECT_DIR$/Collections/collections.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="gojs.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,8 +47,8 @@
       <file leaf-file-name="collections.coffee" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Collections/collections.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.0608108">
-              <caret line="61" column="5" selection-start-line="61" selection-start-column="5" selection-end-line="61" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.5743243">
+              <caret line="24" column="36" selection-start-line="24" selection-start-column="36" selection-end-line="24" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -664,14 +663,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_bootstap.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="10" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Views/BoardView.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -680,10 +671,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/_bootstap.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="10" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Collections/collections.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.0608108">
-          <caret line="61" column="5" selection-start-line="61" selection-start-column="5" selection-end-line="61" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.5743243">
+          <caret line="24" column="36" selection-start-line="24" selection-start-column="36" selection-end-line="24" selection-end-column="36" />
           <folding />
         </state>
       </provider>
