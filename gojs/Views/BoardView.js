@@ -75,6 +75,9 @@ if (Meteor.isClient) {
     Template.board.helpers({
 
         getStones: function () {
+            if (context_forground) {
+                context_forground.clearRect(0, 0, background.width, background.height)
+            };
             var game = Games.findOne(); // this needs to be updated
             return game ? game.stones : [];
         },
@@ -86,10 +89,6 @@ if (Meteor.isClient) {
                 OFFSET / 2,
                 stone.player);
         },
-
-        lastUpdate: function () {
-            return Session.get('lastUpdate');
-        }
 
     });
 
@@ -115,13 +114,9 @@ if (Meteor.isClient) {
 
             var game = Games.findOne();
 
-
             if (game.isEmpty(xp, yp)) {
-
                 game.addStone(xp, yp, players[currentPlayer]);
-
                 currentPlayer = (currentPlayer + 1) % players.length;
-
             } else {
                 game.removeStone(xp, yp);
                 Session.set('lastUpdate', new Date() );
