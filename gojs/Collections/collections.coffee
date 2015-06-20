@@ -5,6 +5,7 @@ Games.helpers
   getID: -> this._id
 
   makeMove: (x, y, player) ->
+    board = this
     stone = {
       x: x
       y: y
@@ -17,14 +18,30 @@ Games.helpers
 
     boardSig = JSON.stringify this.stones
     this.gameHistory.push boardSig
-    # ko checking goes here.
 
-#    this._setHistory(this.gameHistory)
-#    this._setStones(this.stones)
-#
+    numOfmoves = this.gameHistory.length
+    if numOfmoves > 1
+        if this.gameHistory[numOfmoves - 2] == this.gameHistory[numOfmoves - 1]
+            console.log "KO!"
+            this.removeStone(stone)
+            this.gameHistory.pop()
+            return false
+
+    enemies = this.connectedEnemies(x, y)
+    _.each enemies, (s) -> board.isStoneAlive(s.x, s.y, true)
+
+    isSuicide = ! board.isStoneAlive(x, y, false)
+
+    if isSuicide
+        console.log "SUICIE PLAY!"
+        this.removeStone(stone)
+        this.gameHistory.pop()
+        return false
+
     this.removeTheDead()
-    this.stones.push stone
-    this.removeTheDead()
+    if this.isEmpty(x,y)
+        this.stones.push stone
+        this.removeTheDead()
 
     this.updateDB()
 
