@@ -10,34 +10,45 @@ Games.helpers
       y: y
       player: player
     }
+
     this.stones.push(stone)
-    this.addStone(stone)
     this.stones.sort stoneSort
 
-    console.log "stones", this.stones
 
     boardSig = JSON.stringify this.stones
-    console.log "boardsis", boardSig
+    this.gameHistory.push boardSig
     # ko checking goes here.
-    Games.update _id:this._id, {$push: gameHistory: boardSig}
-    console.log "gameHist:", this.gameHistory;
-    console.log "gameHist2:", Games.findOne(this._id).gameHistory;
+
+#    this._setHistory(this.gameHistory)
+#    this._setStones(this.stones)
+#
+    this.removeTheDead()
+    this.stones.push stone
+    this.removeTheDead()
+
+    this.updateDB()
 
   isEmpty: (x, y) -> ! this.getStone(x, y)
 
-  addStone: (stone) ->
-#    this.stones.push(stone)
-    dbop = $push: stones: stone
-    Games.update _id:this._id, dbop
+  updateDB: ->
+    this._setHistory(this.gameHistory)
+    this._setStones(this.stones)
 
-  removeStone: (x, y) ->
-    dbop = $pull: stones: this.getStone(x, y)
-    Games.update _id:this._id, dbop
+  removeStone: (stone) ->
+      i = this.stones.indexOf stone
+      if i >= 0 
+          this.stones.splice i, 1
+      this.updateDB()
+    
 
   getStone: (x, y) -> _.find this.stones, (s) ->  s.x == x and s.y == y
 
   _setStones: (stones_prime) ->
     dbop = $set: stones: stones_prime
+    Games.update _id: this._id, dbop
+
+  _setHistory: (history) ->
+    dbop = $set: gameHistory: history
     Games.update _id: this._id, dbop
 
   getNeighbors: (x, y) ->
@@ -66,7 +77,7 @@ Games.helpers
     stone = this.getStone(x, y)
     _.filter this.getNeighbors(x,y), ((s) -> s && s.player == stone.player )
 
-  isStoneAlive: (x,y, f) ->
+  isStoneAlive: (x,y, removeVisited) ->
     visited = []
     que = []
 
@@ -74,6 +85,9 @@ Games.helpers
 
     while que.length
       currentStone = que.pop()
+
+      if ! currentStone
+          continue
 
       if this.hasEye(currentStone.x, currentStone.y)
         return true
@@ -86,19 +100,21 @@ Games.helpers
         if visited.indexOf(s) == -1
           que.push(s)
 
-    if f
-      f(visited)
+    if removeVisited
+        aliveStone = _.difference this.stones, visited
+        this.stones = aliveStone
+        #_.each visited, this.removeStone
 
     return false
 
   removeTheDead: ->
     board = this
-    _.each board.stones, (s) ->
-      if not board.isStoneAlive(s.x, s.y)
-        board.remove(s.x, s.y);
+    _.each board.stones, (s) -> board.isStoneAlive(s.x, s.y, true) # isStoneAlive mutates data!
 
   removeAllStone: ->
-    this._setStones([])
+    this.stones = []
+    this.updateDB()
+    #this._setStones([])
 
 
 

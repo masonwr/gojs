@@ -139,8 +139,7 @@ if (Meteor.isClient) {
 
                 currentPlayer = (currentPlayer + 1) % players.length;
             } else {
-                //game.removeStone(xp, yp);
-                //Session.set('lastUpdate', new Date() );
+                game.removeStone(game.getStone(xp, yp));
             }
         }
 
