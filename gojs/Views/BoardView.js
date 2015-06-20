@@ -49,16 +49,16 @@ if (Meteor.isClient) {
         // draw board grid
         for (var i = 0; i < GAME_SIZE; i++) {
             var line_len = SIZE - OFFSET;
-            var x = (i * OFFSET) + OFFSET;
+            var m = (i * OFFSET) + OFFSET;
 
-            context.fillRect(x, OFFSET, LINE_WIDTH, line_len);
-            context.fillRect(OFFSET, x, line_len, LINE_WIDTH);
+            context.fillRect(m, OFFSET, LINE_WIDTH, line_len);
+            context.fillRect(OFFSET, m, line_len, LINE_WIDTH);
         }
 
         // draw star points
         for (var i = 0; i < 9; i++) {
-            var f = function (x) {
-                return 6 * x + 4
+            var f = function (n) {
+                return 6 * n + 4
             }; // defines start point placement
 
             var div = f(Math.floor(i / 3));
@@ -141,6 +141,50 @@ if (Meteor.isClient) {
             } else {
                 //game.removeStone(game.getStone(xp, yp));
             }
+        },
+
+        // this works on ipad!
+        'touchend #forground': function (event) {
+
+            //console.log("event: ",event);
+            //debugger;
+            event.preventDefault();
+            var xyoffset = $(event.target).offset();
+            var x = event.originalEvent.pageX - xyoffset.left;
+            var y = event.originalEvent.pageY - xyoffset.top;
+
+            var xp = Math.round(x / OFFSET);
+            var yp = Math.round(y / OFFSET);
+
+            var isValid =
+                xp > 0 && yp > 0 &&
+                xp <= GAME_SIZE && yp <= GAME_SIZE;
+
+            if (!isValid) {
+                console.log('invalid move');
+                return;
+            }
+
+            var game = Games.findOne();
+
+            if (game.isEmpty(xp, yp)) {
+
+                game.makeMove(xp, yp, players[currentPlayer]);
+
+                //console.log("neigh", game.getNeighbors(xp, yp));
+                //console.log("has eye", game.hasEye(xp, yp));
+                //console.log("connected enemies:", game.connectedEnemies(xp, yp));
+                //console.log("connectedAllies:", game.connectedAllies(xp, yp));
+                //console.log("isStoneAlive:", game.isStoneAlive(xp, yp));
+
+                currentPlayer = (currentPlayer + 1) % players.length;
+            } else {
+                //game.removeStone(game.getStone(xp, yp));
+            }
+        },
+
+        'touchmove' : function (e){
+            e.preventDefault();
         }
 
     });
