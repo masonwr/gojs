@@ -96,6 +96,17 @@ if (Meteor.isClient) {
 
     Template.board.events({
 
+        'click #removeStone': function (e) {
+            var game = Games.findOne();
+            game.removeAllStone();
+        },
+
+        'click #clearHistory': function (e) {
+            var game = Games.findOne();
+            var res = Games.update({_id: game._id}, {$set : {gameHistory: []}});
+            console.log("what the fuc!", res);
+        },
+
         'click #forground': function (event) {
 
             var xyoffset = $(event.target).offset();
@@ -117,28 +128,19 @@ if (Meteor.isClient) {
             var game = Games.findOne();
 
             if (game.isEmpty(xp, yp)) {
-                game.addStone(xp, yp, players[currentPlayer]);
+
+                game.makeMove(xp, yp, players[currentPlayer]);
+
+                //console.log("neigh", game.getNeighbors(xp, yp));
+                //console.log("has eye", game.hasEye(xp, yp));
+                //console.log("connected enemies:", game.connectedEnemies(xp, yp));
+                //console.log("connectedAllies:", game.connectedAllies(xp, yp));
+                //console.log("isStoneAlive:", game.isStoneAlive(xp, yp));
+
                 currentPlayer = (currentPlayer + 1) % players.length;
-
-                //console.log("neighbors: ", game.getNeighbors(xp, yp));
-                stones = game.stones;
-
-                console.log("stones presort", stones);
-
-                // move this sorting to the right place
-                stones.sort(function (s1, s2) {
-                    if (s1.x == s2.x){
-                        return s1.y - s2.y;
-                    } else {
-                        return s1.x - s2.x;
-                    }
-
-                });
-
-                console.log("stones postsort", stones);
             } else {
-                game.removeStone(xp, yp);
-                Session.set('lastUpdate', new Date() );
+                //game.removeStone(xp, yp);
+                //Session.set('lastUpdate', new Date() );
             }
         }
 
