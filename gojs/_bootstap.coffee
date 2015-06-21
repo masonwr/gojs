@@ -1,7 +1,13 @@
-@DEV_GAME_ID;
+
 
 if Meteor.isServer
 
+  if Meteor.users.find({}).count() < 1
+    console.log "we have no users! adding default user"
+    Accounts.createUser({
+      email: 'masonwr@mac.com'
+      password: 'jojo'
+    });
 
   if Games.find({}).count() < 1
     console.log "create new game";
