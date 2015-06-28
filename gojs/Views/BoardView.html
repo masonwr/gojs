@@ -1,13 +1,27 @@
 <template name="board">
     {{#if currentUser}}
-    <button id="removeStone">remove Stones</button>
-    <button id="clearHistory">clearHistory</button>
+        <button id="removeStone">remove Stones</button>
+        <button id="clearHistory">clearHistory</button>
     {{/if}}
     <div id="canvasWrapper">
-        <canvas id="background" width="1000" height="1000"></canvas>
-        <canvas id="forground" width="1000" height="1000"></canvas>
-        {{#each getStones}}
-            {{drawStone this}}
-        {{/each}}
+        <!--<canvas id="background" width="1000" height="1000"></canvas>-->
+        <!--<canvas id="forground" width="1000" height="1000"></canvas>-->
+        <svg id="board">
+            <g id="lines"></g>
+            <g id="stones">
+                {{#if showStones}}
+                {{#each getStones}}
+
+                    <circle r="25" cx="{{this.x}}" cy="{{this.y}}" fill="{{this.player}}" class="stone"></circle>
+                {{/each}}
+                {{/if}}
+            </g>
+        </svg>
+
     </div>
 </template>
+
+
+<!--
+<circle cx="250" cy="450" r="12.5" fill="white" style="opacity: 1;"></circle>
+-->

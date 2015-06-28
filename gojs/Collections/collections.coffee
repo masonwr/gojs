@@ -143,4 +143,3 @@ stoneSort = (s1, s2) ->
   else s1.y - s2.y
 
 
-

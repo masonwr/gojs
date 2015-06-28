@@ -13,3 +13,4 @@ accounts-ui
 accounts-password
 meteortypescript:typescript-libs
 dburles:collection-helpers
+reactive-var
