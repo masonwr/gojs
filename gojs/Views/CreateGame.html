@@ -1,0 +1,9 @@
+<template name="CreateGame">
+    <h3>please choose a player to invite to a game:</h3>
+
+    <select name="invite" id="choosePlayer">
+        {{#each players}}
+            <option value="{{id}}">{{username}}</option>
+        {{/each}}
+    </select>
+</template>
