@@ -16,6 +16,12 @@ if Meteor.isServer
       password: 'two'
     });
 
+    Accounts.createUser({
+      email: 'winston@three.com',
+      username: 'thing-three',
+      password: 'three'
+    });
+
   if Games.find({}).count() < 1
     console.log "create new game";
 

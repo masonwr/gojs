@@ -4,7 +4,9 @@
 
 <body>
     {{> loginButtons}}
-    {{> CreateGame}}
-<!--{{> board}}-->
+    {{#if currentUser}}
+        {{> CreateGame}}
+        {{> board}}
+    {{/if}}
 </body>
 
