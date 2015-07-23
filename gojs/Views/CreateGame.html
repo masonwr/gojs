@@ -1,0 +1,13 @@
+<template name="createGame">
+    <div class="invite">
+    <div class="form-group">
+        <label for="sel1">otherPlayers:</label>
+        <select class="form-control" id="sel1">
+            {{#each player}}
+                <option> {{username}} </option>
+            {{/each}}
+        </select> 
+        <div class="btn btn-default">create game</div>
+    </div>
+    </div>
+</template>

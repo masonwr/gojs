@@ -9,7 +9,9 @@ autopublish
 insecure
 less
 coffeescript
-accounts-ui
 accounts-password
 meteortypescript:typescript-libs
 dburles:collection-helpers
+twbs:bootstrap
+grigio:babel
+ian:accounts-ui-bootstrap-3

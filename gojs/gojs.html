@@ -3,7 +3,10 @@
 </head>
 
 <body>
-{{> loginButtons}}
-{{> board}}
+    {{#if currentUser}}
+    {{> layout}}
+    {{else}}
+    {{> loginButtons}}
+    {{/if}}
 </body>
 
