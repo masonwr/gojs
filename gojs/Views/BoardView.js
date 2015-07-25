@@ -132,28 +132,16 @@ if (Meteor.isClient) {
                 return;
             }
 
-            if (game.isEmpty(xp, yp)) {
-
-                //var moveMade = game.makeMove(xp, yp, players[currentPlayer]);
-
+            //if (game.isEmpty(xp, yp)) {
                 Meteor.call('makeMove', xp, yp, Session.get(SESSON.ACTIVE_GAME), function(err, result) {
                     if (err){
+                        console.log(err.error);
                         Session.set(SESSON.ERROR_MSG, err.error);
                     }
                 });
-
-                //console.log("moveMade", moveMade);
-
-                //console.log("neigh", game.getNeighbors(xp, yp));
-                //console.log("has eye", game.hasEye(xp, yp));
-                //console.log("connected enemies:", game.connectedEnemies(xp, yp));
-                //console.log("connectedAllies:", game.connectedAllies(xp, yp));
-                //console.log("isStoneAlive:", game.isStoneAlive(xp, yp));
-
-                currentPlayer = (currentPlayer + 1) % players.length;
-            } else {
+            //} else {
                 //game.removeStone(game.getStone(xp, yp));
-            }
+            //}
         },
 
         // this works on ipad!

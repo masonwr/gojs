@@ -42,8 +42,8 @@ if Meteor.isServer
       game = Games.findOne _id: gameId
 
 
-      # testing
-      throw new Meteor.Error "where is this message?" 
+      if ! game.isEmpty x, y
+        throw new Meteor.Error "that space is filled!"
 
       if ! game
         console.error "no game foud! what the fuck"
