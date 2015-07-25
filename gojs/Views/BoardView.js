@@ -134,7 +134,9 @@ if (Meteor.isClient) {
 
             if (game.isEmpty(xp, yp)) {
 
-                game.makeMove(xp, yp, players[currentPlayer]);
+                var moveMade = game.makeMove(xp, yp, players[currentPlayer]);
+
+                console.log("moveMade", moveMade);
 
                 //console.log("neigh", game.getNeighbors(xp, yp));
                 //console.log("has eye", game.hasEye(xp, yp));
