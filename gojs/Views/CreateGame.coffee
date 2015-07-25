@@ -42,15 +42,17 @@ if Meteor.isServer
       game = Games.findOne _id: gameId
 
 
-      if ! game.isEmpty x, y
-        throw new Meteor.Error "that space is filled!"
 
       if ! game
         console.error "no game foud! what the fuck"
         throw "no game found!"
 
       if game.activePlayer != this.userId
+        console.log "it is not your turn"
         return false
+
+      if ! game.isEmpty x, y
+        throw new Meteor.Error "that space is filled!"
 
 
       color = if game.white == this.userId then 'white' else 'black'

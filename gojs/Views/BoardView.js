@@ -12,8 +12,8 @@ var LINE_COLOR = '#333333';
 var OFFSET = SIZE / GAME_SIZE;
 
 //TODO may be move this only the actual player doc?
-var players = ['black', 'white'];
-var currentPlayer = 0;
+//var players = ['black', 'white'];
+//var currentPlayer = 0;
 
 
 var background;
@@ -131,6 +131,9 @@ if (Meteor.isClient) {
                 console.log("no game is active");
                 return;
             }
+
+            // TODO: make it so that the error handeling is all handled 
+            // either in the call back or in the meteor method call serverside.
 
             //if (game.isEmpty(xp, yp)) {
                 Meteor.call('makeMove', xp, yp, Session.get(SESSON.ACTIVE_GAME), function(err, result) {
