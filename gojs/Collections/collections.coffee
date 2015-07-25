@@ -84,6 +84,10 @@ Games.helpers
     dbop = $set: gameHistory: history
     Games.update _id: this._id, dbop
 
+  setActivePlayer: (playerId) ->
+    dbop = $set: activePlayer: playerId
+    Games.update _id: this._id, dbop
+
   getNeighbors: (x, y) ->
     board = this
     neighbors = []

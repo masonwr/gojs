@@ -20,6 +20,14 @@ if Meteor.isClient
       blackPlayer = Meteor.users.findOne {_id: gameDoc.black}
       '' + whitePlayer.username + ' VS ' + blackPlayer.username
 
+    isTurn: ->
+      game = Games.findOne( Session.get(SESSON.ACTIVE_GAME) );
+      if game then game.activePlayer == Meteor.user()._id else false
+
+    playersTurn: ->
+      game = this
+      if game.activePlayer == Meteor.user()._id  then 'active-turn' else 'opponents-turn'
+
   Template.layout.events
 
     'click .active-game': () -> Session.set SESSON.ACTIVE_GAME, this._id

@@ -8,7 +8,7 @@
                     currents games
                 </li>
                 {{#each game}}
-                <li><a href="#" class='active-game'>{{getGameTitle this}}</a></li>
+                <li><a href="#" class='active-game {{playersTurn}}'>{{getGameTitle this}}</a></li>
                 {{/each}}
 
                 <li>
@@ -28,10 +28,10 @@
                         </ul>
                         <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
                         {{#if isShowBoard}}
+                            {{> board }}
                         {{else}}
                             <h1>No active board!</h1>
                         {{/if}}
-                        {{> board}}
                         <!--<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>-->
                     </div>
                 </div>
