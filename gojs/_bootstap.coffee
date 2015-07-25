@@ -14,18 +14,9 @@ if Meteor.isServer
       email: 'masonwr@max.com'
       password: 'jojo'
     
-
+  # add a game where the black and whilte are bothe dame same id
   #if Games.find({}).count() < 1
-    #console.log "create new game";
-    #defaultGame =
-      #whitePlayer: 1
-      #blackPlayer: 2
-      #currentMove: 'black'
-      #stones:[]
-      #gameHistory:[]
-      #size: 19 # this need to be programatically set in the future
-
-    #Games.insert defaultGame
+  # Meteorcall etc....
 
 
 
