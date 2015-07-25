@@ -1,3 +1,6 @@
 // globals
 
-S_CURRENT_GAME = "currentGameID";
+SESSON = {
+    ACTIVE_GAME: 'active-game'
+};
+

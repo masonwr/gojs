@@ -5,4 +5,10 @@ if Meteor.isServer
       Meteor.users.find {},
         fields:
             username: 1
+
+    Meteor.publish 'userGames', ->
+      Games.find {$or : [
+        { black: this.userId },
+        { whilte: this.userId }
+      ]}
     

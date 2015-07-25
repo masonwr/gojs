@@ -11,6 +11,7 @@ var GAME_SIZE = BOARDS.large;
 var LINE_COLOR = '#333333';
 var OFFSET = SIZE / GAME_SIZE;
 
+//TODO may be move this only the actual player doc?
 var players = ['white', 'black'];
 var currentPlayer = 0;
 
@@ -69,6 +70,7 @@ if (Meteor.isClient) {
 
             context.fillCircle(x, y, 5, LINE_COLOR);
         }
+        // should draw all the stone on the board here too.
     });
 
 
@@ -80,7 +82,7 @@ if (Meteor.isClient) {
             } else {
                 console.log("context has not been set yet!");
             }
-            var game = Games.findOne(); // this needs to be updated
+            var game = Games.findOne({_id: Session.get(SESSON.ACTIVE_GAME)});
             return game ? game.stones : [];
         },
 
@@ -96,16 +98,14 @@ if (Meteor.isClient) {
 
     Template.board.events({
 
-        'click #removeStone': function (e) {
-            var game = Games.findOne();
-            game.removeAllStone();
-        },
+        //'click #removeStone': function (e) {
+            //game.removeAllStone();
+        //},
 
-        'click #clearHistory': function (e) {
-            var game = Games.findOne();
-            var res = Games.update({_id: game._id}, {$set : {gameHistory: []}});
-            console.log("what the fuc!", res);
-        },
+        //'click #clearHistory': function (e) {
+            //var res = Games.update({_id: game._id}, {$set : {gameHistory: []}});
+            //console.log("what the fuc!", res);
+        //},
 
         'click #forground': function (event) {
 
@@ -125,7 +125,12 @@ if (Meteor.isClient) {
                 return;
             }
 
-            var game = Games.findOne();
+            var game = Games.findOne({_id: Session.get(SESSON.ACTIVE_GAME)});
+
+            if (! game){
+                console.log("no game is active");
+                return;
+            }
 
             if (game.isEmpty(xp, yp)) {
 
@@ -165,7 +170,7 @@ if (Meteor.isClient) {
                 return;
             }
 
-            var game = Games.findOne();
+            var game = Games.findOne({_id: Session.get(SESSON.ACTIVE_GAME)});
 
             if (game.isEmpty(xp, yp)) {
 

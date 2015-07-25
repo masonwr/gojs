@@ -1,5 +1,6 @@
 @Games = new Mongo.Collection("games");
 
+debug = false
 
 Games.helpers
   getID: -> this._id
@@ -12,11 +13,18 @@ Games.helpers
       player: player
     }
 
-    this.stones.push(stone)
+    if debug
+      console.log "stone", stone
+
+    this.stones.push stone
     this.stones.sort stoneSort
 
 
     boardSig = JSON.stringify this.stones
+
+    if debug
+      console.log "boardSig", boardSig
+
     this.gameHistory.push boardSig
 
     numOfmoves = this.gameHistory.length
@@ -35,7 +43,15 @@ Games.helpers
     if isSuicide
         console.log "SUICIE PLAY!"
         this.removeStone(stone)
+
+        if debug
+          console.log "before game history", this.gameHistory
+
         this.gameHistory.pop()
+        
+        if debug
+          console.log "after game history", this.gameHistory
+
         return false
 
     this.removeTheDead()
