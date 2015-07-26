@@ -7,6 +7,8 @@ Games.helpers
 
   makeMove: (x, y, player) ->
     board = this
+    numberOfStoneOnBoard = (_.filter board.stones, (s) -> s.player == player).length
+
     stone = {
       x: x
       y: y
@@ -51,6 +53,10 @@ Games.helpers
         this.stones.push stone
         this.removeTheDead()
 
+    # TODO sky is this now working
+    killCount = numberOfStoneOnBoard - (_.filter board.stones, (s) -> s.player == player).length
+
+    console.log "kill count:", killCount
     this.updateDB()
 
   isEmpty: (x, y) -> ! this.getStone(x, y)
