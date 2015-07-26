@@ -7,7 +7,9 @@ Games.helpers
 
   makeMove: (x, y, player) ->
     board = this
-    numberOfStoneOnBoard = (_.filter board.stones, (s) -> s.player == player).length
+    opponentStoneCount = (_.filter board.stones, (s) -> s.player != player).length
+
+    totalStoneCount = board.stones.length
 
     stone = {
       x: x
@@ -18,46 +20,49 @@ Games.helpers
     if debug
       console.log "stone", stone
 
-    this.stones.push stone
-    this.stones.sort stoneSort
+    board.stones.push stone
+    board.stones.sort stoneSort
 
 
-    boardSig = JSON.stringify this.stones
+    boardSig = JSON.stringify board.stones
 
     if debug
       console.log "boardSig", boardSig
 
-    this.gameHistory.push boardSig
+    board.gameHistory.push boardSig
 
-    numOfmoves = this.gameHistory.length
+    numOfmoves = board.gameHistory.length
     if numOfmoves > 1
-        if this.gameHistory[numOfmoves - 2] == this.gameHistory[numOfmoves - 1]
+        if board.gameHistory[numOfmoves - 2] == board.gameHistory[numOfmoves - 1]
             console.log "KO!"
-            this.removeStone(stone)
-            this.gameHistory.pop()
+            board.removeStone(stone)
+            board.gameHistory.pop()
             throw new Meteor.Error "illegal move, ko battle!"
             #return false
 
-    enemies = this.connectedEnemies(x, y)
+    enemies = board.connectedEnemies(x, y)
     _.each enemies, (s) -> board.isStoneAlive(s.x, s.y, true)
 
     isSuicide = ! board.isStoneAlive(x, y, false)
 
     if isSuicide
-        this.removeStone(stone)
+        board.removeStone(stone)
         throw new Meteor.Error "illegal move, suicide."
         #return false
 
-    this.removeTheDead()
-    if this.isEmpty(x,y)
-        this.stones.push stone
-        this.removeTheDead()
+    board.removeTheDead()
+    if board.isEmpty(x,y)
+        board.stones.push stone
+        board.removeTheDead()
 
-    # TODO sky is this now working
-    killCount = numberOfStoneOnBoard - (_.filter board.stones, (s) -> s.player == player).length
+    killCount = opponentStoneCount - (_.filter board.stones, (s) -> s.player != player).length
 
-    console.log "kill count:", killCount
-    this.updateDB()
+    if killCount
+      board[player + 'Score'] += killCount
+      board._setPlayerScore player, board[player + 'Score']
+
+    board.updateDB() # end of makeMove
+
 
   isEmpty: (x, y) -> ! this.getStone(x, y)
 
@@ -66,13 +71,23 @@ Games.helpers
     this._setStones(this.stones)
 
   removeStone: (stone) ->
-      i = this.stones.indexOf stone
-      if i >= 0
-          this.stones.splice i, 1
-      this.updateDB()
+    i = this.stones.indexOf stone
+    if i >= 0
+        this.stones.splice i, 1
+    this.updateDB()
     
 
   getStone: (x, y) -> _.find this.stones, (s) ->  s.x == x and s.y == y
+
+  _setPlayerScore: (playerColor, score) ->
+    if playerColor == 'white'
+      dbop = $set: whiteScore: score
+    else if playerColor == 'black'
+      dbop = $set: blackScore: score
+    else
+      throw Meteor.Error "player color: " + playerColor + "is invalid!"
+
+    Games.update _id: this._id, dbop
 
   _setStones: (stones_prime) ->
     dbop = $set: stones: stones_prime

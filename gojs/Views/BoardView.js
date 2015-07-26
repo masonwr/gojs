@@ -70,7 +70,8 @@ if (Meteor.isClient) {
 
             context.fillCircle(x, y, 5, LINE_COLOR);
         }
-        // should draw all the stone on the board here too.
+        // should draw all the stone on the board here too?
+        console.log("are we getting here?");
     });
 
 

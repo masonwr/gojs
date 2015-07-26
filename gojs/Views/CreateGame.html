@@ -1,12 +1,14 @@
 <template name="createGame">
     <div class="invite">
-    <div class="form-group">
-        <h3>Click on Player name to invite to a game</h3>
-        <ul>
-            {{#each player}}
+        <div class="form-group">
+            <li class="sidebar-brand">
+                active games 
+            </li>
+            <ul>
+                {{#each player}}
                 <li class='player'> {{username}} </li>
-            {{/each}}
-        </ul>
-    </div>
+                {{/each}}
+            </ul>
+        </div>
     </div>
 </template>

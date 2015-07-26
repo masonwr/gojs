@@ -25,6 +25,10 @@
     color: green;
 }
 
+.sidebar-nav .on-screen{
+    background-color: #333333
+}
+
 #infoPanel {
 }
 
