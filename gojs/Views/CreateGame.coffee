@@ -10,27 +10,22 @@ if Meteor.isClient
 
   Template.createGame.events
     'click .player' : ->
-      console.log "this", this
-        
-      #move the entiere config object in side the method call
-      config = {
-        black : this._id
-        white : Meteor.user()._id
-      }
-
-      Meteor.call 'createGame', config
+      opponent = this
+      Meteor.call 'createGame', Meteor.user()._id, opponent._id
 
 
 #// TODO look at where there methods should go.
 if Meteor.isServer
   Meteor.methods
-    'createGame' : (config) ->
-        config.activePlayer = config.black
-        config.stones = []
-        config.gameHistory = []
-        config.size = 19
-
-        Games.insert config
+    'createGame' : (whiteId, blackId) ->
+      config = {}
+      config.white = whiteId
+      config.black = blackId
+      config.activePlayer = config.black
+      config.stones = []
+      config.gameHistory = []
+      config.size = 19
+      Games.insert config
 
 
     makeMove : (x, y, gameId) ->
@@ -48,7 +43,7 @@ if Meteor.isServer
         throw "no game found!"
 
       if game.activePlayer != this.userId
-        console.log "it is not your turn"
+        throw new Meteor.Error "it is not your turn"
         return false
 
       if ! game.isEmpty x, y

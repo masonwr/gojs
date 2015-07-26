@@ -14,13 +14,4 @@ if Meteor.isServer
       email: 'masonwr@max.com'
       password: 'jojo'
     
-  # add a game where the black and whilte are bothe dame same id
-  #if Games.find({}).count() < 1
-  # Meteorcall etc....
-
-
-
-
-
-
 

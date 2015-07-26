@@ -33,7 +33,8 @@ Games.helpers
             console.log "KO!"
             this.removeStone(stone)
             this.gameHistory.pop()
-            return false
+            throw new Meteor.Error "illegal move, ko battle!"
+            #return false
 
     enemies = this.connectedEnemies(x, y)
     _.each enemies, (s) -> board.isStoneAlive(s.x, s.y, true)
@@ -41,18 +42,9 @@ Games.helpers
     isSuicide = ! board.isStoneAlive(x, y, false)
 
     if isSuicide
-        console.log "SUICIE PLAY!"
         this.removeStone(stone)
-
-        if debug
-          console.log "before game history", this.gameHistory
-
-        this.gameHistory.pop()
-        
-        if debug
-          console.log "after game history", this.gameHistory
-
-        return false
+        throw new Meteor.Error "illegal move, suicide."
+        #return false
 
     this.removeTheDead()
     if this.isEmpty(x,y)
@@ -69,7 +61,7 @@ Games.helpers
 
   removeStone: (stone) ->
       i = this.stones.indexOf stone
-      if i >= 0 
+      if i >= 0
           this.stones.splice i, 1
       this.updateDB()
     
@@ -140,7 +132,6 @@ Games.helpers
     if removeVisited
         aliveStone = _.difference this.stones, visited
         this.stones = aliveStone
-        #_.each visited, this.removeStone
 
     return false
 
@@ -151,9 +142,6 @@ Games.helpers
   removeAllStone: ->
     this.stones = []
     this.updateDB()
-    #this._setStones([])
-
-
 
 
 
