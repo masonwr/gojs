@@ -3,10 +3,16 @@
 </head>
 
 <body>
-    <!--{{#if currentUser}}-->
+    {{#if currentUser}}
     {{> layout}}
-    <!--{{else}}-->
-    <!--{{> loginButtons}}-->
-    <!--{{/if}}-->
+    {{else}}
+    {{> loginPage}}
+    {{/if}}
 </body>
+
+<template name="loginPage">
+    <div id="term">
+        
+    </div>
+</template>
 

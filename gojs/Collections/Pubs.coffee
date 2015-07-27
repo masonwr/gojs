@@ -9,6 +9,6 @@ if Meteor.isServer
     Meteor.publish 'userGames', ->
       Games.find {$or : [
         { black: this.userId },
-        { whilte: this.userId }
+        { white: this.userId }
       ]}
     
