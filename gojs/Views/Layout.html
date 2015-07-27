@@ -8,14 +8,12 @@
                     active games 
                 </li>
                 {{#each game}}
-                    <li><a href="#" class='active-game {{playersTurn}} {{loadedOnScreen}}'>{{getGameTitle this}}</a></li>
+                <li><a href="#" class='active-game {{playersTurn}} {{loadedOnScreen}}'>{{getGameTitle this}}<i class="ion-ios-close"></i></a></li>
                 {{/each}}
                 <li class="sidebar-brand">
                    create game 
                 </li>
-                <li>
-                    {{> createGame}}
-                </li>
+                {{> createGame}}
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
