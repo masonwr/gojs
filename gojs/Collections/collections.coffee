@@ -1,4 +1,4 @@
-@Games = new Mongo.Collection("games");
+@Games = new Mongo.Collection("games")
 
 debug = false
 
