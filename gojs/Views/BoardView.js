@@ -70,8 +70,19 @@ if (Meteor.isClient) {
 
             context.fillCircle(x, y, 5, LINE_COLOR);
         }
-        // should draw all the stone on the board here too?
-        console.log("are we getting here?");
+        // draw all stons init
+        // TODO dry this out...
+        var game = Games.findOne({_id: Session.get(SESSON.ACTIVE_GAME)});
+        if (game) {
+            _.each( game.stones, function(stone) {
+                context_forground.fillCircle(
+                    stone.x * OFFSET,
+                    stone.y * OFFSET,
+                    OFFSET / 2,
+                    stone.player);
+            });
+        }
+
     });
 
 
