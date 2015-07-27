@@ -10,13 +10,17 @@ if (Meteor.isClient) {
             } else {
                 term.echo('unknown command');
             }
-        }, { prompt: '>', login: function(user, pass, call){
+        }, { login: function(user, pass, call){
 
-            Meteor.loginWithPassword(user, pass);
+            Meteor.loginWithPassword(user, pass, function(err, thing){
+                console.log("what is all this");
+                debugger;
+            });
 
         } });
 
     })
 
 }
+
 
