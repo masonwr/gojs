@@ -5,11 +5,9 @@
 # but you can also edit it by hand.
 
 meteor-platform
-insecure
 less
 coffeescript
 accounts-password
-meteortypescript:typescript-libs
 dburles:collection-helpers
 twbs:bootstrap
 grigio:babel
