@@ -4,8 +4,6 @@ if Meteor.isClient
     instance = Template.instance()
     instance.subscribe('userNames')
     instance.subscribe('userGames')
-    #console.log "Template.subscriptionsReady", instance.subscriptionsReady()
-
   
   Template.layout.events
     'click #menu-toggle': (e) ->
@@ -23,7 +21,7 @@ if Meteor.isClient
       '' + whitePlayer.username + ' VS ' + blackPlayer.username
 
     isTurn: ->
-      game = Games.findOne( Session.get(SESSON.ACTIVE_GAME) );
+      game = Games.findOne( Session.get(SESSON.ACTIVE_GAME) )
       if game then game.activePlayer == Meteor.user()._id else false
 
     loadedOnScreen: ->
@@ -33,6 +31,11 @@ if Meteor.isClient
     playersTurn: ->
       game = this
       if game.activePlayer == Meteor.user()._id  then 'active-turn' else 'opponents-turn'
+
+    stoneColor: ->
+      game = Games.findOne Session.get SESSON.ACTIVE_GAME
+      return 'ion-ios-infinite-outline' if ! game
+      if game.white == Meteor.user()._id then 'ion-ios-circle-outline' else 'ion-ios-circle-filled'
 
   Template.layout.events
 

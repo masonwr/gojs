@@ -6,7 +6,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0;
+    /*z-index: 0;*/
 }
 
 #forground{
@@ -19,7 +19,13 @@
 
 #canvasWrapper {
     position: relative;
+    width: 1000px;
+    height: 1000px;
+
+    margin-left:auto;
+    margin-right:auto;
 }
+
 
 .sidebar-nav .active-turn{
     color: green;
@@ -35,4 +41,15 @@
     height: 100%;
 }
 
+#menu-toggle {
+    position:absolute;
+    top: -6px;
+    left: 2px;
+    font-size:21px;
+    opacity: .5;
+}
+
+.big-icon {
+    font-size: 100px
+}
 

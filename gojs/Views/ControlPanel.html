@@ -1,0 +1,78 @@
+<template name="ControlPanel">
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="ion-shuffle"></i>
+        </a>
+        
+        <span class="pull-right">
+            <a href="#"><i class="ion-power logout"> </i></a>
+        </span>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        {{> controlls}}
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+
+<template name="controlls">
+    <div class="row">
+
+                <div class="row top-level-controls">
+                    <div class="col-md-4 text-center">
+                        <i class="ion-ios-pulse-strong big-icon"></i>
+                    </div>
+
+                    <div class="col-md-4 text-center">
+        
+                        <i class="{{stoneColor}} big-icon"></i>
+                    {{#if isShowBoard}}
+                    {{else}}
+                    <h4> no game selected </h4>
+                    {{/if}}
+                    </div>
+
+                    <div class="col-md-4 text-center">
+                        <a href="#"><i class="ion-power logout big-icon"></i></a>
+                    </div>
+                </div>
+        <!--<div class="col-md-4">-->
+
+            <!--<h3><span class="label label-default">thisis a te</span></h3>-->
+           
+            <!--<p>some other content here</p>-->
+            <!--[><div class="panel panel-default"><]-->
+                <!--[><div class="panel-heading">Panel heading without title</div><]-->
+                <!--[><div class="panel-body"><]-->
+                    <!--[>Panel content<]-->
+                <!--[></div><]-->
+            <!--[></div> <]-->
+        <!--</div>-->
+
+        <!--<div class="col-md-4">-->
+            <!--<div class="panel panel-default">-->
+                <!--<div class="panel-heading">Panel heading without title</div>-->
+                <!--<div class="panel-body">-->
+                    <!--Panel content-->
+                <!--</div>-->
+            <!--</div> -->
+        <!--</div>-->
+
+        <!--<div class="col-md-4">-->
+            <!--<div class="panel panel-default">-->
+                <!--<div class="panel-heading">Panel heading without title</div>-->
+                <!--<div class="panel-body">-->
+                    <!--Panel content-->
+                <!--</div>-->
+            <!--</div> -->
+        <!--</div>-->
+
+    </div>
+</template>
