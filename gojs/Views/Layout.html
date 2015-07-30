@@ -20,42 +20,12 @@
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
-            <a href="#menu-toggle" id="menu-toggle"><i class="ion-ios-pulse-strong"></i></a>
+            <!--<a href="#menu-toggle" id="menu-toggle"><i class="ion-ios-pulse-strong"></i></a>-->
             <div class="container-fluid">
                 <div class="row">
                     {{> ControlPanel}}
                 </div>
-
-                <!--big controll buttons-->
-                <div class="row">
-                    <div class="col-md-4 text-center">
-                        <i class="ion-ios-pulse-strong big-icon"></i>
-                    </div>
-
-                    <div class="col-md-4 text-center">
-        
-                        <i class="{{stoneColor}} big-icon"></i>
-                    {{#if isShowBoard}}
-                    {{else}}
-                    <h4> no game selected </h4>
-                    {{/if}}
-                    </div>
-
-                    <div class="col-md-4 text-center">
-                        <a href="#"><i class="ion-power logout big-icon"></i></a>
-                    </div>
-                </div>
-                <!--/#big controll buttons-->
-                <!--TODO: put a status bar sort of thing up here?-->
-                <div class="row" id="infoPanel">
-                    <div class="col-lg-12">
-                        <!--<ul class="nav navbar-nav navbar-right">-->
-                            <!--{{> loginButtons}}-->
-                        <!--</ul>-->
-                        <!--<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>-->
-                        <!--<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>-->
-                    </div>
-                </div>
+                {{> BigButtons}}
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-center">

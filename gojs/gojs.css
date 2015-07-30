@@ -26,7 +26,6 @@
     margin-right:auto;
 }
 
-
 .sidebar-nav .active-turn{
     color: green;
 }
@@ -50,6 +49,9 @@
 }
 
 .big-icon {
-    font-size: 100px
+    font-size: 75px;
 }
 
+.big-icon.inactive {
+    opacity: 0.5;
+}
