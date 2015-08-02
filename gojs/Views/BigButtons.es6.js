@@ -9,6 +9,11 @@ if (Meteor.isClient) {
         'click .side-panel-toggle' : (e) => {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled")
+        },
+
+        'click .controll-panel-toggle': (e) => {
+            e.preventDefault();
+            Session.set(SESSON.OPEN_CONTROLLS, ! Session.get(SESSON.OPEN_CONTROLLS));
         }
 
     });

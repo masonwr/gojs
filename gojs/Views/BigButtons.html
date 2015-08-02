@@ -1,12 +1,18 @@
 <template name="BigButtons">
     <div class="row">
-        <div class="col-md-4 text-center">
+        <div class="col-md-3 text-center">
             <a href="#">
                 <i class="ion-more side-panel-toggle big-icon"></i>
             </a>
         </div>
 
-        <div class="col-md-4 text-center">
+        <div class="col-md-3 text-center">
+            <a href="#">
+                <i class="ion-shuffle controll-panel-toggle big-icon"></i>
+            </a>
+        </div>
+
+        <div class="col-md-3 text-center">
             <i class="{{getCurrentStoneIcon}} big-icon {{isTurn}}"></i>
             {{#if getSessionVal 'active-game'}}
             {{else}}
@@ -14,7 +20,7 @@
             {{/if}}
         </div>
 
-        <div class="col-md-4 text-center">
+        <div class="col-md-3 text-center">
             <a href="#"><i class="ion-power logout big-icon"></i></a>
         </div>
     </div>
