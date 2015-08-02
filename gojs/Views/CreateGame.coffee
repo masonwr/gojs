@@ -1,3 +1,24 @@
+Meteor.methods
+  makeMove : (x, y, gameId) ->
+    game = Games.findOne _id: gameId
+    
+    if ! game
+      throw "no game found! fatal error!"
+
+    if game.activePlayer != this.userId
+      throw new Meteor.Error "it is not your turn"
+
+    if ! game.isEmpty x, y
+      throw new Meteor.Error "that space is filled!"
+
+    color = if game.white == this.userId then 'white' else 'black'
+    
+    game.makeMove(x, y, color)
+      
+    nextPlayer = if color == 'white' then game.black else game.white
+    game.setActivePlayer nextPlayer
+    return true
+
 if Meteor.isClient
   Template.createGame.helpers
     #game: ->
@@ -31,23 +52,4 @@ if Meteor.isServer
       Games.insert config
 
 
-    makeMove : (x, y, gameId) ->
-      game = Games.findOne _id: gameId
-      
-      if ! game
-        throw "no game found! fatal error!"
-
-      if game.activePlayer != this.userId
-        throw new Meteor.Error "it is not your turn"
-
-      if ! game.isEmpty x, y
-        throw new Meteor.Error "that space is filled!"
-
-      color = if game.white == this.userId then 'white' else 'black'
-      
-      game.makeMove(x, y, color)
-        
-      nextPlayer = if color == 'white' then game.black else game.white
-      game.setActivePlayer nextPlayer
-      return true
 
