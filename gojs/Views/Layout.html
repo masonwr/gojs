@@ -22,11 +22,14 @@
         <div id="page-content-wrapper">
             <!--<a href="#menu-toggle" id="menu-toggle"><i class="ion-ios-pulse-strong"></i></a>-->
             <div class="container-fluid">
-                {{#if getSessionVal 'open-controlls'}}
-                <div class="row">
-                    {{> ControlPanel}}
-                </div>
-                {{/if}}
+                {{#momentum plugin='slide-height'}}
+                    {{#if getSessionVal 'open-controlls'}}
+                    <div class="row">
+                        {{> ControlPanel}}
+                    </div>
+                    {{/if}}
+                {{/momentum}}
+
                 {{> BigButtons}}
                 <div class="row">
                     <div class="col-lg-12">

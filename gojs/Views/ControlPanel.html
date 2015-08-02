@@ -1,20 +1,9 @@
 <template name="ControlPanel">
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingTwo">
-      <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="ion-shuffle"></i>
-        </a>
-      </h4>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {{> controlls}}
+        </div>
     </div>
-    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-      <div class="panel-body">
-        {{> controlls}}
-      </div>
-    </div>
-  </div>
-</div>
 </template>
 
 
