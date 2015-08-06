@@ -83,7 +83,7 @@ if (Meteor.isClient) {
                     stone.player);
 
                 if (game.isLastMove(stone)){
-                    //drawLastMoveMarker(context_forground, stone);
+                    drawLastMoveMarker(context_forground, stone);
                 }
             });
         }
@@ -115,7 +115,7 @@ if (Meteor.isClient) {
            var game = Games.findOne({_id: Session.get(SESSON.ACTIVE_GAME)});
            //console.log("game.lastMove", game.lastMove);
            if (game.isLastMove(stone)){
-               //drawLastMoveMarker(context_forground, stone);
+               drawLastMoveMarker(context_forground, stone);
            }
         },
 
