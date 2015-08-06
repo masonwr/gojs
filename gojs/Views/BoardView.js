@@ -72,6 +72,7 @@ if (Meteor.isClient) {
         }
         // draw all stons init
         // TODO dry this out...
+        console.log("getting here");
         var game = Games.findOne({_id: Session.get(SESSON.ACTIVE_GAME)});
         if (game) {
             _.each( game.stones, function(stone) {
@@ -80,6 +81,10 @@ if (Meteor.isClient) {
                     stone.y * OFFSET,
                     OFFSET / 2,
                     stone.player);
+
+                if (game.isLastMove(stone)){
+                    //drawLastMoveMarker(context_forground, stone);
+                }
             });
         }
 
@@ -90,6 +95,7 @@ if (Meteor.isClient) {
 
         getStones: function () {
             if (context_forground) {
+                console.log("get here");
                 context_forground.clearRect(0, 0, background.width, background.height);
             } else {
                 console.log("context has not been set yet!");
@@ -104,20 +110,18 @@ if (Meteor.isClient) {
                 stone.y * OFFSET,
                 OFFSET / 2,
                 stone.player);
+
+           //console.log("stone:", stone.id);
+           var game = Games.findOne({_id: Session.get(SESSON.ACTIVE_GAME)});
+           //console.log("game.lastMove", game.lastMove);
+           if (game.isLastMove(stone)){
+               //drawLastMoveMarker(context_forground, stone);
+           }
         },
 
     });
 
     Template.board.events({
-
-        //'click #removeStone': function (e) {
-            //game.removeAllStone();
-        //},
-
-        //'click #clearHistory': function (e) {
-            //var res = Games.update({_id: game._id}, {$set : {gameHistory: []}});
-            //console.log("what the fuc!", res);
-        //},
 
         'click #forground': function (event) {
 
@@ -144,19 +148,12 @@ if (Meteor.isClient) {
                 return;
             }
 
-            // TODO: make it so that the error handeling is all handled 
-            // either in the call back or in the meteor method call serverside.
-
-            //if (game.isEmpty(xp, yp)) {
-                Meteor.call('makeMove', xp, yp, Session.get(SESSON.ACTIVE_GAME), function(err, result) {
-                    if (err){
-                        console.log(err.error);
-                        Session.set(SESSON.ERROR_MSG, err.error);
-                    }
-                });
-            //} else {
-                //game.removeStone(game.getStone(xp, yp));
-            //}
+            Meteor.call('makeMove', xp, yp, Session.get(SESSON.ACTIVE_GAME), function(err, result) {
+                if (err){
+                    console.log(err.error);
+                    Session.set(SESSON.ERROR_MSG, err.error);
+                }
+            });
         },
 
         // this works on ipad!
@@ -207,3 +204,10 @@ if (Meteor.isClient) {
 
 }
 
+function drawLastMoveMarker(canvas, stone) {
+    canvas.fillCircle(
+        stone.x * OFFSET,
+        stone.y * OFFSET,
+        OFFSET / 9,
+        stone.player == 'white' ? 'black' : 'white');
+}

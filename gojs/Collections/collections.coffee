@@ -15,6 +15,7 @@ Games.helpers
       x: x
       y: y
       player: player
+      id: Random.id()
     }
 
     if debug
@@ -60,7 +61,8 @@ Games.helpers
     if killCount
       board[player + 'Score'] += killCount
       board._setPlayerScore player, board[player + 'Score']
-
+    
+    board.lastMove = stone.id
     board.updateDB() # end of makeMove
 
 
@@ -69,6 +71,8 @@ Games.helpers
   updateDB: ->
     this._setHistory(this.gameHistory)
     this._setStones(this.stones)
+    Games.update({ _id: this._id}, {$set: {lastMove: this.lastMove}})
+
 
   removeStone: (stone) ->
     i = this.stones.indexOf stone
@@ -163,6 +167,9 @@ Games.helpers
   removeAllStone: ->
     this.stones = []
     this.updateDB()
+
+  isLastMove: (s) ->
+    if this.lastMove then this.lastMove == s.id else false
 
 
 
