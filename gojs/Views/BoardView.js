@@ -72,7 +72,6 @@ if (Meteor.isClient) {
         }
         // draw all stons init
         // TODO dry this out...
-        console.log("getting here");
         var game = Games.findOne({_id: Session.get(SESSON.ACTIVE_GAME)});
         if (game) {
             _.each( game.stones, function(stone) {
@@ -95,12 +94,17 @@ if (Meteor.isClient) {
 
         getStones: function () {
             if (context_forground) {
-                console.log("get here");
                 context_forground.clearRect(0, 0, background.width, background.height);
             } else {
                 console.log("context has not been set yet!");
             }
             var game = Games.findOne({_id: Session.get(SESSON.ACTIVE_GAME)});
+            
+            if (game) {
+                _.each(game.stones, function(st) {
+                    if (game.isLastMove(st)) st.last = true;
+                });
+            }
             return game ? game.stones : [];
         },
 
@@ -111,10 +115,7 @@ if (Meteor.isClient) {
                 OFFSET / 2,
                 stone.player);
 
-           //console.log("stone:", stone.id);
-           var game = Games.findOne({_id: Session.get(SESSON.ACTIVE_GAME)});
-           //console.log("game.lastMove", game.lastMove);
-           if (game.isLastMove(stone)){
+           if (stone.last){
                drawLastMoveMarker(context_forground, stone);
            }
         },
