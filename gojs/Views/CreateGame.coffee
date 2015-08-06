@@ -21,12 +21,7 @@ Meteor.methods
 
 if Meteor.isClient
   Template.createGame.helpers
-    #game: ->
-      #Games.find {}
-
-    #returs a list of players to invite to a game
     status: ->
-      console.log "status obj", this
       if this.status.idle
         return 'idle'
       else if this.status.online
