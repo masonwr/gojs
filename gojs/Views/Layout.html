@@ -23,10 +23,10 @@
             <!--<a href="#menu-toggle" id="menu-toggle"><i class="ion-ios-pulse-strong"></i></a>-->
             <div class="container-fluid">
                 {{#momentum plugin='slide-height'}}
-                    {{#if getSessionVal 'open-controlls'}}
-                    <div class="row">
-                        {{> ControlPanel}}
-                    </div>
+                    {{#if getPanel}}
+                        <div class="row">
+                            {{> UI.dynamic template=getPanel}}
+                        </div>
                     {{/if}}
                 {{/momentum}}
 
@@ -43,5 +43,15 @@
             </div>
         </div>
         <!-- /#page-content-wrapper -->
+    </div>
+</template>
+
+
+<template name="testTemplate">
+    <div class="panel panel-default">
+        <div class="panel-body">
+         <h3>Invite player to a game:</h3>  
+          
+        </div>
     </div>
 </template>

@@ -6,3 +6,6 @@ SESSON = {
     OPEN_CONTROLLS: 'open-controlls'
 };
 
+OPEN_CREATE_GAME_PANEL = 'open-create-game-panel';
+SELECTED_PANEL = 'selected-panel';
+

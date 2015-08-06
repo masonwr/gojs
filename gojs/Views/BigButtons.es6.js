@@ -1,5 +1,13 @@
 if (Meteor.isClient) {
 
+    Meteor.methods({
+        setPanelTemplate(tmpl, timer = 1){
+            var toggle = Session.get(SELECTED_PANEL) != tmpl ? tmpl : false;
+            Session.set(SELECTED_PANEL, false); 
+            setTimeout(() => Session.set(SELECTED_PANEL, toggle), timer);
+        }
+    });
+
     Template.BigButtons.events({
 
         'click .logout': () => {
@@ -13,7 +21,12 @@ if (Meteor.isClient) {
 
         'click .controll-panel-toggle': (e) => {
             e.preventDefault();
-            Session.set(SESSON.OPEN_CONTROLLS, ! Session.get(SESSON.OPEN_CONTROLLS));
+            Meteor.call('setPanelTemplate', 'ControlPanel');
+        },
+
+        'click .create-game' : (e) => {
+            e.preventDefault();
+            Meteor.call('setPanelTemplate', 'testTemplate');
         }
 
     });
@@ -35,4 +48,6 @@ if (Meteor.isClient) {
         },
     });
 }
+
+
 

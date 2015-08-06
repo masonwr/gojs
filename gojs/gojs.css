@@ -55,3 +55,11 @@
 .big-icon.inactive {
     opacity: 0.5;
 }
+
+.player.online a{
+    color: green;
+}
+
+.player.idle a{
+    color: yellow;
+}

@@ -11,6 +11,9 @@ if Meteor.isClient
       $("#wrapper").toggleClass("toggled")
 
   Template.layout.helpers
+
+    getPanel: -> Session.get SELECTED_PANEL
+
     isShowBoard: -> Session.get(SESSON.ACTIVE_GAME)
 
     game: -> Games.find {}

@@ -3,6 +3,7 @@ if Meteor.isServer
       Meteor.users.find {},
         fields:
             username: 1
+            status: 1
 
     Meteor.publish 'userGames', ->
       Games.find {$or : [

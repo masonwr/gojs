@@ -25,6 +25,15 @@ if Meteor.isClient
       #Games.find {}
 
     #returs a list of players to invite to a game
+    status: ->
+      console.log "status obj", this
+      if this.status.idle
+        return 'idle'
+      else if this.status.online
+        return 'online'
+      else
+        return 'offline'
+
     player: -> _.reject(
       Meteor.users.find().fetch(),
       (v) -> v.username == Meteor.user().username)
