@@ -19,8 +19,7 @@
     <!--</div>-->
     <div class="row">
         <div class="controlls">
-            <div class="col-md-3 text-center">
-
+            <div class="col-md-2 text-center">
                 <i class="ion-pinpoint controll"
                    data-toggle="tooltip" 
                    data-placement="top" 
@@ -29,6 +28,26 @@
                 {{getScore}}
                 </p>
             </div>
+
+            <div class="col-md-2 text-center">
+                <i class="ion-ios-pulse controll"
+                   data-toggle="tooltip" 
+                   data-placement="top" 
+                   title="oppoent's score"></i>
+                <p>
+                {{getRivalScore}}
+                </p>
+            </div>
+
+            <div class="col-md-2 text-center">
+                <a href="#">
+                    <i class="ion-trash-a controll"
+                       data-toggle="tooltip" 
+                       data-placement="top" 
+                       title="resign from game"></i>
+                </a>
+            </div>
+
         </div>
     </div>
 </template>
