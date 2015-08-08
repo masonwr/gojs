@@ -63,3 +63,7 @@
 .player.idle a{
     color: yellow;
 }
+
+.controlls i.controll{
+    font-size: 40px;
+}

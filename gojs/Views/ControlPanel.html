@@ -8,11 +8,27 @@
 
 
 <template name="controlls">
-    <h3>list of controlls as icons with tool tips</h3>
-    <ul>
-        <li>resign</li>
-        <li>score {{getScore}}</li>
-        <li>rival score {{getRivalScore}}</li>
-        <li>pass</li>
-    </ul>
+    <!--<div class="row">-->
+    <!--<h3>list of controlls as icons with tool tips</h3>-->
+    <!--<ul>-->
+    <!--<li>resign</li>-->
+    <!--<li>score {{getScore}}</li>-->
+    <!--<li>rival score {{getRivalScore}}</li>-->
+    <!--<li>pass</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <div class="row">
+        <div class="controlls">
+            <div class="col-md-3 text-center">
+
+                <i class="ion-pinpoint controll"
+                   data-toggle="tooltip" 
+                   data-placement="top" 
+                   title="score"></i>
+                <p>
+                {{getScore}}
+                </p>
+            </div>
+        </div>
+    </div>
 </template>

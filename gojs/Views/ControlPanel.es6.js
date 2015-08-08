@@ -1,7 +1,10 @@
 if (Meteor.isClient) {
 
-    Template.controlls.onCreated(() => {
+    Template.controlls.onRendered(() => {
         //console.log("controlls created");
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     });
         
 
