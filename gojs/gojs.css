@@ -73,3 +73,10 @@
     cursor: default;
     opacity: .6;
 }
+
+.controlls div.disable {
+    pointer-events: none;
+    cursor: default;
+    opacity: .6;
+}
+    

@@ -20,6 +20,7 @@ if (Meteor.isClient) {
                 }
             });
         },
+
         pass(){
             vex.dialog.confirm({
                 message: 'are you absolutely sure you want to pass', 
@@ -28,6 +29,7 @@ if (Meteor.isClient) {
                 }
             });
         },
+
         logout(){
             Meteor.logout();
         }
@@ -63,6 +65,10 @@ if (Meteor.isClient) {
                 }
             }
         },
+
+        isDisabled() {
+            return Session.get(SESSON.ACTIVE_GAME) ? '' : 'disable';
+        }
     });
 
 
