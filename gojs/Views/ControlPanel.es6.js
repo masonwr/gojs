@@ -32,6 +32,19 @@ if (Meteor.isClient) {
 
         logout(){
             Meteor.logout();
+        },
+
+        sendMessage(){
+            vex.dialog.prompt({
+                message: 'to: ', 
+                placeholder: 'message',
+                //className: 'vex-theme-bottom-right-corner',
+                callback: function(value) {
+                    return console.log(value);
+                    // call the mesasge with a meteor call
+                    // (to, msg) -> ()
+                }
+            }); 
         }
     };
 
