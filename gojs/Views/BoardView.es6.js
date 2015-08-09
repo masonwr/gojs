@@ -26,6 +26,12 @@ var context_forground;
 
 if (Meteor.isClient) {
 
+    Template.board.onCreated(() => {
+        //what to do here?
+    });
+    
+   
+
     Template.board.onRendered(function () {
 
         CanvasRenderingContext2D.prototype.fillCircle = function (x, y, r, color) {
@@ -95,9 +101,8 @@ if (Meteor.isClient) {
         getStones: function () {
             if (context_forground) {
                 context_forground.clearRect(0, 0, background.width, background.height);
-            } else {
-                console.log("context has not been set yet!");
             }
+
             var game = Games.findOne({_id: Session.get(SESSON.ACTIVE_GAME)});
             
             if (game) {
@@ -105,7 +110,7 @@ if (Meteor.isClient) {
                     if (game.isLastMove(st)) st.last = true;
                 });
             }
-            return game ? game.stones : [];
+            return game && context_forground ? game.stones : [];
         },
 
         drawStone: function (stone) {

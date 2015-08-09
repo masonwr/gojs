@@ -6,6 +6,9 @@ Games.helpers
   getID: -> this._id
 
   makeMove: (x, y, player) ->
+    if this.isOver
+      throw new Meteor.Error 'game-is-over', "You cannot play a move on a game that is finished"
+
     board = this
     opponentStoneCount = (_.filter board.stones, (s) -> s.player != player).length
 
@@ -170,6 +173,9 @@ Games.helpers
 
   isLastMove: (s) ->
     if this.lastMove then this.lastMove == s.id else false
+
+  end: () ->
+    Games.update({_id: this._id}, {$set: isOver: true})
 
 
 

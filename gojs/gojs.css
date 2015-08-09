@@ -67,3 +67,9 @@
 .controlls i.controll{
     font-size: 40px;
 }
+
+.controlls a.inactive{
+    pointer-events: none;
+    cursor: default;
+    opacity: .6;
+}
