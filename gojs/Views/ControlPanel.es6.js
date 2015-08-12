@@ -37,7 +37,7 @@ if (Meteor.isClient) {
         invite(){
             Meteor.call('generateToken', (err, token) => {
                 if (err) {
-                    // show error modal
+                    vex.dialog.alert(err.reason);
                     return;
                 }
 
@@ -47,7 +47,7 @@ if (Meteor.isClient) {
                 let message = `Please give the following token to the person
                 you would like to invite: <code>${token}</code>. <br />
                 Or, simply give them this url: <a href="${url}">${url}</a> <br />
-                (you can only user a token once)`;
+                (you can only use a token once)`;
 
 
                 vex.dialog.alert(message);

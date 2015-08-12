@@ -5,7 +5,7 @@ Meteor.methods({
     generateToken(){
         if (this.userId) {
             let doc = {
-                user: this.userId,
+                createdBy: this.userId,
                 createdAt: new Date(),
             };
             let token = Tokens.insert(doc);
