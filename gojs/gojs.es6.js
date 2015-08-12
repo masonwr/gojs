@@ -1,6 +1,7 @@
 // globals
 // they go here
 
+// SESSION GLOBAL VARS
 SESSON = {
     ACTIVE_GAME: 'active-game', //TODO spelling
     ERROR_MSG: 'error-msg',
@@ -12,6 +13,8 @@ SELECTED_PANEL = 'selected-panel';
 SHOW_SIGNUP = 'show-signup';
 SIGNUP_TOKEN = 'signup-token';
 
+// OTHER GLOBAL CONSTANTS
+TOKEN_LIMIT = 5; 
 
 if (Meteor.isClient) {
 
