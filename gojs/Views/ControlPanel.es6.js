@@ -1,8 +1,5 @@
 if (Meteor.isClient) {
-    //todo: move this to gojs.js. or some place that is more about config options
-    //vex.defaultOptions.className = 'vex-theme-default';
-
-    var actions = {
+    let actions = {
         resign(){
             vex.dialog.confirm({
                 message: 'are you sure that you want to resign from this game?',
@@ -41,6 +38,8 @@ if (Meteor.isClient) {
                     return;
                 }
 
+                Session.set(ACTIVE_INVIT_COUNT, Session.get(ACTIVE_INVIT_COUNT) + 1);
+
                 let url = Meteor.absoluteUrl() + 'register/' + token;
                 console.log("url: ", url);
 
@@ -49,17 +48,22 @@ if (Meteor.isClient) {
                 Or, simply give them this url: <a href="${url}">${url}</a> <br />
                 (you can only use a token once)`;
 
-
                 vex.dialog.alert(message);
             });
         }
-
-
-
     };
+    
+    Template.controlls.onCreated( () => {
 
+        Template.instance().autorun( () => {
+            var s = Session.get(ACTIVE_INVIT_COUNT); //reactive hook
+            Meteor.call('openInvitationCount', (err, count) => {
+                Session.set(ACTIVE_INVIT_COUNT, count);
+            })
+        });
+    
+    });
     Template.controlls.onRendered(() => {
-        //console.log("controlls created");
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
@@ -67,6 +71,9 @@ if (Meteor.isClient) {
         
 
     Template.controlls.helpers({
+        countOpenInvites(){
+           return TOKEN_LIMIT - Session.get(ACTIVE_INVIT_COUNT); 
+        },
         getScore(){
             var gameId = Session.get(SESSON.ACTIVE_GAME);
             if (gameId) {

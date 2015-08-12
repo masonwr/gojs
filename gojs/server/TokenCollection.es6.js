@@ -1,5 +1,13 @@
 Tokens = new Mongo.Collection('tokens');
 
+Tokens.helpers({
+    expire(){
+        this.used = true;
+        Tokens.update({_id: this._id}, this);
+    }
+        
+});
+
 const TOKEN_TTL_DAYS = 3;
 
 Meteor.methods({
@@ -8,7 +16,7 @@ Meteor.methods({
         if (this.userId) {
 
             Tokens.find().forEach( (t) => {
-                if (isTokenExpired(t))  Tokens.remove(t); 
+                if (isTokenExpired(t)) t.expire(); 
             });
 
             let doc = {
@@ -26,7 +34,12 @@ Meteor.methods({
             let token = Tokens.insert(doc);
             return token;
         }
+    },
+
+    openInvitationCount() {
+        return Tokens.find({createdBy: this.userId}).count();
     }
+
 
 });
 

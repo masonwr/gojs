@@ -12,6 +12,7 @@ OPEN_CREATE_GAME_PANEL = 'open-create-game-panel';
 SELECTED_PANEL = 'selected-panel';
 SHOW_SIGNUP = 'show-signup';
 SIGNUP_TOKEN = 'signup-token';
+ACTIVE_INVIT_COUNT = 'open-invitation-count';
 
 // OTHER GLOBAL CONSTANTS
 TOKEN_LIMIT = 5; 
