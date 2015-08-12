@@ -1,6 +1,6 @@
 if (Meteor.isClient) {
 
-    Template.loginPage.onRendered( function () {
+    Template.term.onRendered( function () {
 
         $('#term').terminal(function(command, term) {
             console.log("are we getting here?");

@@ -8,4 +8,5 @@ SESSON = {
 
 OPEN_CREATE_GAME_PANEL = 'open-create-game-panel';
 SELECTED_PANEL = 'selected-panel';
+SHOW_SIGNUP = 'show-signup';
 
