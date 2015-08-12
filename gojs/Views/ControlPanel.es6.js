@@ -1,6 +1,6 @@
 if (Meteor.isClient) {
     //todo: move this to gojs.js. or some place that is more about config options
-    vex.defaultOptions.className = 'vex-theme-default';
+    //vex.defaultOptions.className = 'vex-theme-default';
 
     var actions = {
         resign(){
@@ -34,18 +34,28 @@ if (Meteor.isClient) {
             Meteor.logout();
         },
 
-        sendMessage(){
-            vex.dialog.prompt({
-                message: 'to: ', 
-                placeholder: 'message',
-                //className: 'vex-theme-bottom-right-corner',
-                callback: function(value) {
-                    return console.log(value);
-                    // call the mesasge with a meteor call
-                    // (to, msg) -> ()
+        invite(){
+            Meteor.call('generateToken', (err, token) => {
+                if (err) {
+                    // show error modal
+                    return;
                 }
-            }); 
+
+                let url = Meteor.absoluteUrl() + 'register/' + token;
+                console.log("url: ", url);
+
+                let message = `Please give the following token to the person
+                you would like to invite: <code>${token}</code>. <br />
+                Or, simply give them this url: <a href="${url}">${url}</a> <br />
+                (you can only user a token once)`;
+
+
+                vex.dialog.alert(message);
+            });
         }
+
+
+
     };
 
     Template.controlls.onRendered(() => {
