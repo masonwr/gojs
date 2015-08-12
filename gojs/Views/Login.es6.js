@@ -4,6 +4,26 @@ if (Meteor.isClient) {
         //let showSignup = window.location.href.split('/').pop() == 'register'; 
         //Session.set(SHOW_SIGNUP, showSignup);
     //});
+    //
+    
+    let loginIcons = [ 'ion-ios-bolt'
+                     , 'ion-ionic'
+                     , 'ion-asterisk'
+                     , 'ion-hammer'
+                     , 'ion-eye-disabled'
+                     , 'ion-eye'
+                     ];
+
+    Template.Login.onCreated( () => {
+        setInterval( () => Session.set(LOGIN_ICON, _.sample(loginIcons)), 2000);
+        //todo on detroy kill this interval from firing...
+    });
+
+    Template.Login.helpers({
+        getLoginIcon(){
+            return Session.get(LOGIN_ICON);
+        }
+    });
 
     Template.Login.events({
         'click #signup-icon': () => {

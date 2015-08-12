@@ -6,7 +6,7 @@ Accounts.config({
 
 Meteor.methods({
 
-    registerUser( {username, password, token}){
+    registerUser({username, password, token}){
         let tokenFound = Tokens.findOne(token);
         if (tokenFound) {
             let created = Accounts.createUser({username, password});
@@ -15,7 +15,6 @@ Meteor.methods({
             } else {
                 throw new Meteor.Error("failed-to-add-user");
             }
-
             return true;
         } else {
             throw new Meteor.Error('invalid-token', `The token you have you to register is invalid. Please seek a new token.`);

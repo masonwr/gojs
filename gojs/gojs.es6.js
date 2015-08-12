@@ -13,9 +13,10 @@ SELECTED_PANEL = 'selected-panel';
 SHOW_SIGNUP = 'show-signup';
 SIGNUP_TOKEN = 'signup-token';
 ACTIVE_INVIT_COUNT = 'open-invitation-count';
+LOGIN_ICON = 'login-icon';
 
 // OTHER GLOBAL CONSTANTS
-TOKEN_LIMIT = 5; 
+TOKEN_LIMIT = 10; 
 
 if (Meteor.isClient) {
 

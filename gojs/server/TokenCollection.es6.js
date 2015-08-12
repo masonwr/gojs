@@ -16,7 +16,8 @@ Meteor.methods({
         if (this.userId) {
 
             Tokens.find().forEach( (t) => {
-                if (isTokenExpired(t)) t.expire(); 
+                //todo purge token older than, say 30 days...
+                if (daysActive(t) >= TOKEN_TTL_DAYS) t.expire(); 
             });
 
             let doc = {
@@ -26,9 +27,8 @@ Meteor.methods({
 
             let outstandingTokens = Tokens.find({createdBy: this.userId}).count();
             if (outstandingTokens >= TOKEN_LIMIT){
-                throw new Meteor.Error('exceeding-token-limit', `You have created too many tokens! 
-                                       Please wait ${TOKEN_TTL_DAYS} days for tokens to expire. <br />
-                                       (you can only have ${TOKEN_LIMIT} active tokens at a time)`);
+                throw new Meteor.Error('exceeding-token-limit', `You have created too many tokens! <br />
+                                       (you can only make ${TOKEN_LIMIT} tokens)`);
             }
 
             let token = Tokens.insert(doc);
@@ -37,17 +37,17 @@ Meteor.methods({
     },
 
     openInvitationCount() {
+        if (! this.userId) return null;
         return Tokens.find({createdBy: this.userId}).count();
     }
 
-
 });
 
-function isTokenExpired( tokenDoc ) {
+function daysActive( tokenDoc ) {
     let tokenDate = tokenDoc.createdAt;
     let now = new Date();
     let timeDiff = Math.abs(tokenDate.getTime() - now.getTime());
     let timeDiffinDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-    return timeDiffinDays >= TOKEN_TTL_DAYS;
+    return timeDiffinDays; 
 }
 
