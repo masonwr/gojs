@@ -1,4 +1,5 @@
 // globals
+// they go here
 
 SESSON = {
     ACTIVE_GAME: 'active-game', //TODO spelling
