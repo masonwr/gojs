@@ -1,6 +1,10 @@
 if (Meteor.isClient) {
 
     Template.Login.events({
+        'click #signup-icon': () => {
+            Session.set(SHOW_SIGNUP, true);
+        },
+
         'click #login-icon': () => {
             vex.dialog.open({
                 message: 'Enter your username and password:',

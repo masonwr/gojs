@@ -1,16 +1,68 @@
 <template name="Login">
     <div id="login-page">
         {{#if getSessionVal 'show-signup'}}
-            signup ingo goes here
+            {{>SignupForm}}
         {{else}}
         <div class="row">
             <div id="icon-box" class="col-xs-12 text-center">
-                <i id="login-icon" class="ion-ios-circle-filled"></i>
+                <i id="login-icon" class="ion-ios-circle-filled link"></i>
 
-                <p><i id="signup" class="ion-ios-bolt"></i>
+                <p><i id="signup-icon" class="ion-ios-bolt link"></i>
                 </p>
             </div>
         </div>
         {{/if}}
+    </div>
+</template>
+
+<template name="SignupForm">
+    <div class="row">
+        <div class='col-md-12 text-center'>
+            <form class="form-horizontal">
+                <fieldset>
+
+                    <!-- Form Name -->
+                    <legend>register</legend>
+
+                    <!-- Text input-->
+                    <div class="control-group">
+                        <label class="control-label" for="username">username</label>
+                        <div class="controls">
+                            <input id="username" name="username" type="text" placeholder="username" class="input-xlarge" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Password input-->
+                    <div class="control-group">
+                        <label class="control-label" for="password">password</label>
+                        <div class="controls">
+                            <input id="password" name="password" type="password" placeholder="password" class="input-xlarge" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Password input-->
+                    <div class="control-group">
+                        <label class="control-label" for="validator">again, please</label>
+                        <div class="controls">
+                            <input id="validator" name="validator" type="password" placeholder="password" class="input-xlarge" required="">
+
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="control-group">
+                        <label class="control-label" for="submit">submit</label>
+                        <div class="controls">
+                            <button id="submit" name="submit" class="btn btn-default">submit</button>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+
+
+        </div>
     </div>
 </template>
