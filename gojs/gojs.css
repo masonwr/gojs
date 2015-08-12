@@ -80,9 +80,16 @@
     opacity: .6;
 }
 
+#signup-icon{
+    font-size: 275px;
+    color: #851515;
+}
 
 #login-icon{
     font-size: 275px;
+}
+
+.link{
     cursor: crosshair;
 }
 

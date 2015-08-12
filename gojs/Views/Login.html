@@ -1,16 +1,15 @@
 <template name="Login">
     <div id="login-page">
-        {{#if getSessionVal 'show-signup'}}
-            signup ingo goes here
-        {{else}}
         <div class="row">
             <div id="icon-box" class="col-xs-12 text-center">
-                <i id="login-icon" class="ion-ios-circle-filled"></i>
-
-                <p><i id="signup" class="ion-ios-bolt"></i>
+                {{#if getSessionVal 'show-signup'}}
+                <p><i id="signup-icon" class="ion-ios-bolt link"></i>
                 </p>
+                {{else}}
+                <i id="login-icon" class="ion-ios-circle-filled link"></i>
+                {{/if}}
             </div>
         </div>
-        {{/if}}
     </div>
 </template>
+
