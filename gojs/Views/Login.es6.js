@@ -10,10 +10,11 @@ if (Meteor.isClient) {
             vex.dialog.open({
                 message: 'Register your username and password:',
                 input:`<input name="username" type="text" placeholder="Username" required />
-                       <input name="password" type="password" placeholder="Password" required />`,
+                       <input name="password" type="password" placeholder="Password" required />
+                       <input name="token" type="text" placeholder="token" required />`,
                 buttons: [
                     $.extend({}, vex.dialog.buttons.YES, {
-                        text: 'Login'
+                        text: 'Register'
                     }), $.extend({}, vex.dialog.buttons.NO, {
                         text: 'Back'
                     })

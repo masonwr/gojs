@@ -2,12 +2,14 @@
     <div id="login-page">
         <div class="row">
             <div id="icon-box" class="col-xs-12 text-center">
+                {{#momentum plugin='slide-height'}}
                 {{#if getSessionVal 'show-signup'}}
                 <p><i id="signup-icon" class="ion-ios-bolt link"></i>
                 </p>
                 {{else}}
                 <i id="login-icon" class="ion-ios-circle-filled link"></i>
                 {{/if}}
+                {{/momentum}}
             </div>
         </div>
     </div>
