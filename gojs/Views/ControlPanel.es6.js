@@ -1,5 +1,5 @@
 if (Meteor.isClient) {
-
+    //todo: move this to gojs.js. or some place that is more about config options
     vex.defaultOptions.className = 'vex-theme-default';
 
     var actions = {
