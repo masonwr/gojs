@@ -8,7 +8,7 @@ Tokens.helpers({
         
 });
 
-const TOKEN_TTL_DAYS = 3;
+const TOKEN_TTL_DAYS = 10;
 
 Meteor.methods({
     
