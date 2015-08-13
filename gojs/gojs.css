@@ -87,11 +87,16 @@
 
 #login-icon{
     font-size: 275px;
+    color: #444;
 }
 
-.link{
-    cursor: crosshair;
-}
+/*#login-icon a {*/
+    /*color:#eee;*/
+/*}*/
+
+/*.link{*/
+    /*cursor: crosshair;*/
+/*}*/
 
 #login-icon:hover {
     color:#ddd;
@@ -107,6 +112,6 @@
 
 #icon-box{
     position:absolute;
-    top: 25%;
+    top: 15%;
 }
 

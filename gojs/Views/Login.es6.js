@@ -5,7 +5,8 @@ if (Meteor.isClient) {
         //Session.set(SHOW_SIGNUP, showSignup);
     //});
     //
-    
+    let iconSwitcher;
+
     let loginIcons = [ 'ion-ios-bolt'
                      , 'ion-ionic'
                      , 'ion-asterisk'
@@ -15,8 +16,16 @@ if (Meteor.isClient) {
                      ];
 
     Template.Login.onCreated( () => {
-        setInterval( () => Session.set(LOGIN_ICON, _.sample(loginIcons)), 2000);
-        //todo on detroy kill this interval from firing...
+
+        Session.set(LOGIN_ICON, _.sample(loginIcons));
+
+        iconSwitcher = setInterval( () => {
+            Session.set(LOGIN_ICON, _.sample(loginIcons))
+        }, 2000);
+    });
+
+    Template.Login.onDestroyed( () => {
+        clearInterval(iconSwitcher);
     });
 
     Template.Login.helpers({
