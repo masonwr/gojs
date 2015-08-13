@@ -13,6 +13,14 @@ if (Meteor.isClient) {
                      , 'ion-hammer'
                      , 'ion-eye-disabled'
                      , 'ion-eye'
+                     , 'ion-bug'
+                     , 'ion-outlet'
+                     , 'ion-planet'
+                     , 'ion-ios-game-controller-b'
+                     , 'ion-ios-flame'
+                     , 'ion-android-walk'
+                     , 'ion-social-tux'
+                     , 'ion-coffee'
                      ];
 
     Template.Login.onCreated( () => {

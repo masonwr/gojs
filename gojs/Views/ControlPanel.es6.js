@@ -6,7 +6,7 @@ if (Meteor.isClient) {
                 callback: function(value) {
                     if (value){
                         console.log(Session.get(SESSON.ACTIVE_GAME) );
-                        Meteor.call('endGame', Session.get(SESSON.ACTIVE_GAME), (err, res) =>{
+                        Meteor.call('endGame', Session.get(SESSON.ACTIVE_GAME), (err, res) => {
                             if (err){
                                 //erro handeling?
                             } else if (res) {
@@ -32,48 +32,53 @@ if (Meteor.isClient) {
         },
 
         invite(){
-            Meteor.call('generateToken', (err, token) => {
-                if (err) {
-                    vex.dialog.alert(err.reason);
-                    return;
+            vex.dialog.confirm({
+                message: `Generate invitation token?`, 
+                callback: function(value) {
+                    if (! value) return;
+
+                    Meteor.call('generateToken', (err, token) => {
+                        if (err) {
+                            vex.dialog.alert(err.reason);
+                            return;
+                        }
+
+                        Session.set(ACTIVE_INVIT_COUNT, Session.get(ACTIVE_INVIT_COUNT) + 1);
+
+                        let url = Meteor.absoluteUrl() + 'register/' + token;
+
+                        let message = `Please give the following token to the person
+                            you would like to invite: <code>${token}</code>. <br />
+                            Or, simply give them this url: <a href="${url}">${url}</a> <br />
+                            (you can only use a token once)`;
+
+                        vex.dialog.alert(message);
+                    });
                 }
-
-                Session.set(ACTIVE_INVIT_COUNT, Session.get(ACTIVE_INVIT_COUNT) + 1);
-
-                let url = Meteor.absoluteUrl() + 'register/' + token;
-                console.log("url: ", url);
-
-                let message = `Please give the following token to the person
-                you would like to invite: <code>${token}</code>. <br />
-                Or, simply give them this url: <a href="${url}">${url}</a> <br />
-                (you can only use a token once)`;
-
-                vex.dialog.alert(message);
             });
         }
     };
     
     Template.controlls.onCreated( () => {
-
         Template.instance().autorun( () => {
             var s = Session.get(ACTIVE_INVIT_COUNT); //reactive hook
             Meteor.call('openInvitationCount', (err, count) => {
                 Session.set(ACTIVE_INVIT_COUNT, count);
             })
         });
-    
     });
+
     Template.controlls.onRendered(() => {
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
         })
     });
         
-
     Template.controlls.helpers({
         countOpenInvites(){
            return TOKEN_LIMIT - Session.get(ACTIVE_INVIT_COUNT); 
         },
+
         getScore(){
             var gameId = Session.get(SESSON.ACTIVE_GAME);
             if (gameId) {
