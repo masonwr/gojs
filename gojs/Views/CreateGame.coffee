@@ -36,7 +36,11 @@ if Meteor.isClient
   Template.createGame.events
     'click .player' : ->
       opponent = this
-      Meteor.call 'createGame', Meteor.user()._id, opponent._id
+      vex.dialog.confirm
+        message: "would you like to invite #{this.username} to a game?"
+        callback: (value) ->
+          if value
+            Meteor.call 'createGame', Meteor.user()._id, opponent._id
 
 
 #// TODO look at where there methods should go.
