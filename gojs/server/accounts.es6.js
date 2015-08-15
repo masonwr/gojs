@@ -17,7 +17,7 @@ Meteor.methods({
             }
             return true;
         } else {
-            throw new Meteor.Error('invalid-token', `The token you have you to register is invalid. Please seek a new token.`);
+            throw new Meteor.Error('invalid-token', `The token you have is invalid. Please seek a new token.`);
         }
     }
 
